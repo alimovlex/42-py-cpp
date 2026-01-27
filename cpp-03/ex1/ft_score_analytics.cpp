@@ -20,7 +20,7 @@ int main(int argc, char** argv)
         }
         catch (const std::invalid_argument& e)
         {
-            std::cout << "Error: " << *argv << "is not a valid score!";
+            std::cout << "Error: " << *argv << "is not a valid score!" << std::endl;
         }
 
     std::cout << "Scores processed: [";
