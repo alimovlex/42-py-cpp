@@ -22,7 +22,6 @@ class Player
 int main(void)
 {
     std::cout << "=== Achievement Tracker System ===" << std::endl;
-    std::set<std::string>::iterator it;
     std::set<std::string> unique_values;
     std::set<std::string> intersection_values;
     std::set<std::string> different_values;
@@ -32,20 +31,20 @@ int main(void)
     std::set<std::string> temp;
     std::unordered_map<std::string, int> occurence;
     std::set<std::string> alice_achievements = {
-        "first kill", 
-        "level_10", 
-        "treasure_hunter", 
+        "first kill",
+        "level_10",
+        "treasure_hunter",
         "speed_demon"
     };
     std::set<std::string> bob_achievements = {
-        "first kill", 
-        "level_10", 
-        "boss_slayer", 
+        "first kill",
+        "level_10",
+        "boss_slayer",
         "collector"
     };
     std::set<std::string> charlie_achievements = {
-        "level_10", 
-        "treasure_hunter", 
+        "level_10",
+        "treasure_hunter",
         "boss_slayer",
         "speed_demon",
         "perfectionist"
@@ -60,7 +59,7 @@ int main(void)
     bob.print_achievemets();
     std::cout << "Player charlie achievements: {";
     charlie.print_achievemets();
-    
+
     std::cout << "=== Achievement Analytics ===" << std::endl;
 
     std::set_union(
@@ -95,7 +94,7 @@ int main(void)
         charlie_achievements.begin(), charlie_achievements.end(),
         std::inserter(temp, temp.begin())
     );
-    intersection_values.swap(temp); 
+    intersection_values.swap(temp);
 
     std::cout << "Common to all players: {";
     for(auto& value: intersection_values)
@@ -104,14 +103,14 @@ int main(void)
 
     temp.clear();
 
-    for (const auto& achievement : alice_achievements)   
+    for (const auto& achievement : alice_achievements)
         ++occurence[achievement];
-    for (const auto& achievement : bob_achievements)     
+    for (const auto& achievement : bob_achievements)
         ++occurence[achievement];
-    for (const auto& achievement : charlie_achievements) 
+    for (const auto& achievement : charlie_achievements)
         ++occurence[achievement];
 
-    for (const auto& [achievement, count] : occurence) 
+    for (const auto& [achievement, count] : occurence)
     {
         if (count == 1)
             different_values.insert(achievement);
@@ -147,12 +146,12 @@ int main(void)
     std::cout << "}" << std::endl;
 
     std::cout << "Alice unique: {";
-    for (const auto& value : alice_unique) 
+    for (const auto& value : alice_unique)
         std::cout << "'" << value << "'" << ", ";
     std::cout << "}" << std::endl;
 
     std::cout << "Bob unique: {";
-    for (const auto& value : bob_unique) 
+    for (const auto& value : bob_unique)
         std::cout << "'" << value << "'" << ", ";
     std::cout << "}" << std::endl;
     return 0;
