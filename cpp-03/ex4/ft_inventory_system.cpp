@@ -1,9 +1,10 @@
 #include <iostream>
 #include <map>
+#include <set>
 
 class ItemInfo {
     public:
-    int qty;
+    int quantity;
     std::string type;
     std::string rarity;
     int value;
@@ -39,5 +40,19 @@ int main(void)
     };
 
     std::cout << "=== Alice's Inventory ===" << std::endl;
+    for (const auto& key: alice)
+        std::cout << " - " << key.first << " (" << key.second.type << ", "
+        << key.second.rarity << "): " << key.second.quantity << "x "
+        << "@ " << key.second.value << " gold each = "
+        << key.second.quantity * key.second.value << " gold" << std::endl;
+
+    /*   Iteration over basic dictionary
+    for (const auto& [key, value] : alice)
+    {
+        std::cout << key << " -> " << value << std::endl;
+    }
+    */
+    //std::set<std::string> keys_list = alice.Keys;
+
     return 0;
 }
