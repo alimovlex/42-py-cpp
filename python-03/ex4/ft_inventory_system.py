@@ -1,130 +1,119 @@
 #!/usr/bin/env python3
 
-import math
 import sys
 
-# Define constants to mimic C++ std::numeric_limits<int>::min/max
-# Assuming a 32-bit signed integer range, typical for int in C++
-INT_MIN = -2147483648
-INT_MAX = 2147483647
 
-
-def get_total_items(inventory: dict) -> int:
-    total_value = 0
-    for value in inventory.values():
-        total_value += value
-    return total_value
-
-
-def get_stats(inventory: dict):
-    # Initialize with C++ int min/max equivalents
-    max_value = INT_MIN
-    min_value = INT_MAX
-    max_key = ""
-    min_key = ""
-    restock_items = []
-
-    # Create a copy for 'scarce' category, similar to C++ `std::map<...>::scarce = inventory;`
-    scarce = inventory.copy()
-
-    for key, value in inventory.items():
-        if value > max_value:
-            max_value = value
-            max_key = key
-
-        # Replicate C++ quirky min/restock logic:
-        # min_key becomes the last item that set the minimum.
-        # restock_items accumulates all items that caused min_value to decrease.
-        if value < min_value:
-            min_value = value
-            min_key = key
-            restock_items.append(min_key)
-
-    print(f"Most abundant: {max_key} ({max_value} units)")
-    print(f"Least abundant: {min_key} ({min_value} units)")
-    print()
-
-    print("=== Item Categories ===")
-    print(f"Moderate: {{'{max_key}': {max_value}}}")
-
-    # Remove max_key from scarce
-    if max_key in scarce:
-        del scarce[max_key]
-
-    print("Scarce: {", end="")
-    # C++ output format: `{'key': value, 'key': value, }` (note the trailing comma and space)
-    for key, value in scarce.items():
-        print(f"'{key}': {value}, ", end="")
-    print("}")
-    print()
-
-    print("=== Management Suggestions ===")
-    print("Restock needed: [", end="")
-    # C++ output format: `['item', 'item', ]` (note the trailing comma and space)
-    for item in restock_items:
-        print(f"'{item}', ", end="")
-    print("]")
-
-
-def ft_parse_args(args_list: list) -> dict:
-    inventory = {}
-    for arg_str in args_list:
-        if ":" in arg_str:
-            parts = arg_str.split(":", 1)  # Split only on the first colon
-            if len(parts) == 2:
-                key = parts[0]
-                value_str = parts[1]
-                try:
-                    value = int(value_str)
-                    inventory[key] = value
-                except ValueError:
-                    # In C++, std::stoi would throw on invalid input.
-                    # We'll mimic by ignoring malformed arguments, as there's no explicit error handling in C++ example.
-                    pass
+def build_inventory(arg_list):
+    """Create a plain dict from ['name:qty', ...] strings."""
+    inventory = dict()
+    for token in arg_list:
+        if ":" not in token:
+            continue
+        name, qty_str = token.split(":", 1)
+        try:
+            qty = int(qty_str)
+        except ValueError:
+            qty = 0
+        inventory.update({name: qty})
     return inventory
 
 
+def total_units(inv):
+    """Sum of all quantities."""
+    total = 0
+    for _, qty in inv.items():
+        total += qty
+    return total
+
+
+def most_and_least(inv):
+    """Return (most_item, least_item) as (name, qty)."""
+    most_name = None
+    most_qty = -1
+    least_name = None
+    least_qty = None
+
+    for name, qty in inv.items():
+        if qty > most_qty:
+            most_qty = qty
+            most_name = name
+        if least_qty is None or qty < least_qty:
+            least_qty = qty
+            least_name = name
+
+    return (most_name, most_qty), (least_name, least_qty)
+
+
+def categorize(inv):
+    """Separate items into two groups."""
+    moderate = dict()
+    scarce = dict()
+    for name, qty in inv.items():
+        if qty >= 5:
+            moderate.update({name: qty})
+        else:
+            scarce.update({name: qty})
+    return {"Moderate": moderate, "Scarce": scarce}
+
+
+def restock_needed(inv, threshold=2):
+    """List of items whose quantity is <= threshold."""
+    needed = []
+    for name, qty in inv.items():
+        if qty <= threshold:
+            needed.append(name)
+    return needed
+
+
+def main():
+    raw_items = sys.argv[1:]
+    inventory = build_inventory(raw_items)
+
+    total = total_units(inventory)
+    unique = len(inventory)
+
+    print("=== Inventory System Analysis ===")
+    print(f"Total items in inventory: {total}")
+    print(f"Unique item types: {unique}\n")
+    print("=== Current Inventory ===")
+    sorted_items = list(inventory.items())
+    n = len(sorted_items)
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if sorted_items[j][1] < sorted_items[j + 1][1]:
+                sorted_items[j], sorted_items[j + 1] = (
+                    sorted_items[j + 1],
+                    sorted_items[j],
+                )
+    for name, qty in sorted_items:
+        pct = round(100 * qty / total, 1) if total else 0
+        unit_word = "unit" if qty == 1 else "units"
+        print(f"{name}: {qty} {unit_word} ({pct}%)")
+    print("")
+    most, least = most_and_least(inventory)
+    print("=== Inventory Statistics ===")
+    print(f"Most abundant: {most[0]} ({most[1]} units)")
+    print(f"Least abundant: {least[0]} ({least[1]} unit", end="")
+
+    print(f"{'s' if least[1] != 1 else ''}", end="")
+
+    print(")\n")
+
+    categories = categorize(inventory)
+    print("=== Item Categories ===")
+    for cat_name, sub_dict in categories.items():
+        print(f"{cat_name}: {sub_dict}")
+    print("")
+    needed = restock_needed(inventory)
+    print("=== Management Suggestions ===")
+    print(f"Restock needed: {needed}\n")
+
+    print("=== Dictionary Properties Demo ===")
+    print(f"Dictionary keys: {list(inventory.keys())}")
+    print(f"Dictionary values: {list(inventory.values())}")
+    sample = "sword"
+    print(f"Sample lookup - '{sample}' in inventory: {sample in inventory}")
+
+
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("No arguments supplided. Usage: <item>:<quantity>")
-    else:
-        print("=== Inventory System Analysis ===")
-        # sys.argv[0] is the script name, sys.argv[1:] are the actual arguments
-        inventory = ft_parse_args(sys.argv[1:])
-        total_items = get_total_items(inventory)
-
-        print(f"Total items in inventory: {total_items}")
-        print(f"Unique item types: {len(inventory)}")
-        print()
-
-        print("=== Current Inventory ===")
-        keys = []
-        values = []
-        for key, value in inventory.items():
-            # Handle potential division by zero if inventory is empty
-            percentage = (value / total_items) * 100 if total_items > 0 else 0.0
-            # C++ std::setprecision(3) with default floatfield means 3 decimal places for percentages.
-            print(f"{key}: {value} ({percentage:.2f}%)")
-            keys.append(key)
-            values.append(value)
-        print()
-
-        print("=== Inventory Statistics ===")
-        get_stats(inventory)
-        print()
-
-        print("=== Dictionary Properties Demo ===")
-        print("Dictionary keys: [", end="")
-        # C++ output format: `['key1', 'key2', ]` (note the trailing comma and space)
-        for key in keys:
-            print(f"'{key}', ", end="")
-        print("]")
-
-        print("Dictionary values: [", end="")
-        # C++ output format: `['value1', 'value2', ]` (note trailing comma and space, and values wrapped in quotes)
-        for value in values:
-            print(f"'{value}', ", end="")
-        print("]")
-
-        # C++ `inventory.find("sword") != inventory.end()` is `key in dictionary` in Python
-        print(f"Sample lookup - 'sword' in inventory: {'sword' in inventory}")
+    main()
