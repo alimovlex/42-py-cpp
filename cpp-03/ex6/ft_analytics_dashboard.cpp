@@ -11,6 +11,9 @@ int main(void) {
   std::vector<int> scores = {2300, 1800, 2150, 2050}, scores_doubled;
   std::vector<std::string> high_scorers, active_players;
 
+  std::map<std::string, int> player_scores, score_categories, achievement_counts;
+  int high = 0, medium = 0, low = 0;
+
   std::map<std::string, bool> active = {
       {"alice", true}, {"bob", true}, {"charlie", true}, {"diana", false}};
 
@@ -52,42 +55,34 @@ int main(void) {
   std::cout << "]\n" << std::endl;
 
   std::cout << "=== Dict Comprehension Examples ===" << std::endl;
-
-  std::map<std::string, int> player_scores;
-  for (size_t i = 0; i < players.size(); ++i) {
+  for (size_t i = 0; i < players.size(); ++i)
     player_scores[players[i]] = scores[i];
-  }
-  std::cout << "Player scores processed.\n";
 
-  std::map<std::string, int> score_categories;
-  int high = 0, medium = 0, low = 0;
-  for (int s : scores) {
-    if (s > 2000) {
+  std::cout << "Player scores processed." << std::endl;
+  for (int s : scores)
+    if (s > 2000)
       high++;
-    } else if (s >= 1900) {
+    else if (s >= 1900)
       medium++;
-    } else {
+    else
       low++;
-    }
-  }
+
   score_categories["high"] = high;
   score_categories["medium"] = medium;
   score_categories["low"] = low;
 
-  std::cout << "Score categories: high=" << score_categories["high"]
-            << ", medium=" << score_categories["medium"]
-            << ", low=" << score_categories["low"] << "\n";
+  std::cout << "Score categories: {";
+  for (auto& score : score_categories)
+    std::cout << "'" << score.first << "': " << score.second << ", ";
+  std::cout << "}\n" << std::endl;
 
-  std::map<std::string, int> achievement_counts;
-  for (const auto &p : players) {
-    if (achievements.count(p)) {
-      achievement_counts[p] = achievements.at(p).size();
-    } else {
-      achievement_counts[p] = 0;
-    }
-  }
+  for (const auto &player : players)
+    if (achievements.count(player))
+      achievement_counts[player] = achievements.at(player).size();
+    else
+      achievement_counts[player] = 0;
 
-  std::cout << "\n=== Set Comprehension Examples ===\n";
+  std::cout << "=== Set Comprehension Examples ===" << std::endl;
 
   std::set<std::string> unique_players(players.begin(), players.end());
 
