@@ -11,11 +11,11 @@ if __name__ == "__main__":
             player = players[i % len(players)]
             level = (i * 3) % 20 + 1
             if i % 10 == 0:
-                yield (f"Event {i}: Player {player} (level {level}) found treasure")
+                yield (f"E {i}: P {player} (lvl {level}) found treasure")
             elif i % 7 == 0:
-                yield (f"Event {i}: Player {player} (level {level}) leveled up")
+                yield (f"E {i}: P {player} (lvl {level}) leveled up")
             else:
-                yield (f"Event {i}: Player {player} (level {level}) killed monster")
+                yield (f"E {i}: P {player} (lvl {level}) killed monster")
 
     total_events = 0
     high_level = 0

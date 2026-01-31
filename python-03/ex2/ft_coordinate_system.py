@@ -14,22 +14,21 @@ if __name__ == "__main__":
     print("=== Game Coordinate System ===")
 
     if len(sys.argv) < 2:
-        print("No arguments supplied. Usage: python your_script_name.py <x> <y> <z>")
+        print("No args supplied. Usage: python script.py <x> <y> <z>")
     else:
-        x_spawn, y_spawn, z_spawn = 0.0, 0.0, 0.0
+        x_sp, y_sp, z_sp = 0.0, 0.0, 0.0
         x1, y1, z1 = 10.0, 20.0, 5.0
 
-        spawn_point = (x_spawn, y_spawn, z_spawn)
+        spawn_point = (x_sp, y_sp, z_sp)
         p1 = (x1, y1, z1)
         parsed_tuple = (0.0, 0.0, 0.0)
         parsed_list = []
 
-        print(f"Position created: ({x_spawn}, {y_spawn}, {z_spawn})")
+        print(f"Position created: ({x_sp}, {y_sp}, {z_sp})")
         distance = distance3D(spawn_point, p1)
 
-        print(
-            f"Distance between ({x_spawn}, {y_spawn}, {z_spawn}) and ({x1}, {y1}, {z1}): {distance}"
-        )
+        print(f"Distance between ({x_sp}, {y_sp}, {z_sp}) ", end="")
+        print(f"and ({x1}, {y1}, {z1}): {distance}")
         print("Parsing coordinates:", end="")
 
         for arg in sys.argv[1:]:
@@ -41,9 +40,8 @@ if __name__ == "__main__":
             for s in parsed_list:
                 float(s)
         except ValueError as e:
-            print(
-                f"Error parsing coordinates: invalid literal for int() with base 10: {e}"
-            )
+            print("Error parsing coordinates: ", end="")
+            print(f"invalid literal for int() with base 10: {e}")
             print()
 
         if len(parsed_list) >= 3:
@@ -55,14 +53,13 @@ if __name__ == "__main__":
         else:
             pass
 
-        x_parsed, y_parsed, z_parsed = parsed_tuple[0], parsed_tuple[1], parsed_tuple[2]
+        x_par, y_par, z_par = parsed_tuple[0], parsed_tuple[1], parsed_tuple[2]
 
-        print(f"Parsed position: ({x_parsed}, {y_parsed}, {z_parsed})")
+        print(f"Parsed position: ({x_par}, {y_par}, {z_par})")
         distance = distance3D(spawn_point, parsed_tuple)
 
-        print(
-            f"Distance between ({x_spawn}, {y_spawn}, {z_spawn}) and ({x_parsed}, {y_parsed}, {z_parsed}) {distance}"
-        )
+        print(f"Distance between ({x_sp}, {y_sp}, {z_sp}) ", end="")
+        print(f"and ({x_par}, {y_par}, {z_par}) {distance}")
 
         arr = ["asd, def, ghi"]
 
@@ -75,10 +72,9 @@ if __name__ == "__main__":
             for s in arr:
                 float(s)
         except ValueError as e:
-            print(
-                f"Error parsing coordinates: invalid literal for int() with base 10: {e}"
-            )
+            print("Error parsing coordinates: ", end="")
+            print(f"invalid literal for int() with base 10: {e}")
 
         print("Unpacking demonstration: ")
-        print(f"Player at x={x_parsed} y={y_parsed} z={z_parsed}")
-        print(f"Coordinates: X={x_parsed} Y={y_parsed} Z={z_parsed}")
+        print(f"Player at x={x_par} y={y_par} z={z_par}")
+        print(f"Coordinates: X={x_par} Y={y_par} Z={z_par}")
