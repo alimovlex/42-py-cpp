@@ -45,7 +45,6 @@ int write_file(std::string filename, std::vector<std::string>& array)
       {
           for(auto& str: array)
             file << str << std::endl;
-        //file << "[CLASSIFIED] Archive integrity: 100%" << std::endl;
       }
       catch (const std::ios_base::failure &e)
       {

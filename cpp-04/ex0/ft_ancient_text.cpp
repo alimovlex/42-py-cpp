@@ -13,7 +13,7 @@ int main()
   std::fstream file;
   std::string line;
   int i = 1;
-  file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+  file.exceptions(std::ifstream::badbit);
 
   try
   {
