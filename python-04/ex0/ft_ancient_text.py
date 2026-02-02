@@ -4,11 +4,11 @@ if __name__ == "__main__":
     print("=== CYBER ARCHIVES - DATA RECOVERY SYSTEM ===")
     print(f"Accessing storage vault: {filename}")
     try:
-        file = open(filename)
-        print("Connection established...")
-        print("RECOVERED DATA:")
-        print(file.read())
-        print("Data recovery complete. Storage unit disconnected.")
-        file.close()
+        with open(filename, "r") as file:
+            print("Connection established...")
+            print("RECOVERED DATA:")
+            print(file.read())
+            print("Data recovery complete. Storage unit disconnected.")
+            file.close()
     except FileNotFoundError:
         print("Error: storage vault not found")
