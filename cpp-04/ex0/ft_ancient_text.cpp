@@ -36,9 +36,8 @@ int main()
   }
   catch (const std::ios_base::failure &e)
   {
-      std::cerr << "Error: '" << fileName << "' is not a valid file" << std::endl;
-      std::cerr << e.what() << std::endl;
-    return 1;
+      std::cerr << "Error: storage vault not found" << std::endl;
+      return 1;
   }
 
   return 0;
