@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-
-def main():
+if __name__ == "__main__":
     file_name = "new_discovery.txt"
     print("=== CYBER ARCHIVES - PRESERVATION SYSTEM ===\n")
     print(f"Initializing new storage unit: {file_name}")
@@ -28,7 +27,3 @@ def main():
             print(f"Archive '{file_name}' ready for long preservation")
         except FileNotFoundError:
             print("Error: storage vault not found")
-
-
-if __name__ == "__main__":
-    main()
