@@ -138,31 +138,18 @@ class TextProcessor : public DataProcessor
     std::string process(const std::any &data) override
     {
         this->data = data;
-        std::string result;
-        try
-        {
-            auto str = std::any_cast<std::string>(&data);
-            result = *str;
-            return result.insert(0, "Processing data: ");
-        }
-        catch (const std::bad_any_cast& e)
-        {
-            return e.what();
-        }
-        catch (const std::invalid_argument& e)
-        {
-            return e.what();
-        }
-        catch (const std::exception& e)
-        {
-            return e.what();
-        }
+        if (auto str = std::any_cast<std::string>(&data))
+            return "Processing data: " + *str;
+        else
+            return "Type error: expected std::string";
     }
 
     bool validate(const std::any &data) override
     {
-        bool checker = true;
-        return true;
+        bool checker = (data.type() == typeid(std::string));
+        if (checker)
+            std::cout << "Validation: Text data verified" << std::endl;
+        return checker;
     }
 
     std::string format_output(const std::string &result) override
