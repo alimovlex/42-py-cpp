@@ -17,7 +17,7 @@ void iterate_any(const std::any& data, std::string& str, bool& checker)
         {
             if (auto num = std::any_cast<int>(elem))
             {
-                str += std::to_string(elem) + " ";
+                str += std::to_string(num) + " ";
                 checker = true;
             }
             else
@@ -137,11 +137,31 @@ class TextProcessor : public DataProcessor
     public:
     std::string process(const std::any &data) override
     {
-        return "";
+        this->data = data;
+        std::string result;
+        try
+        {
+            auto str = std::any_cast<std::string>(&data);
+            result = *str;
+            return result.insert(0, "Processing data: ");
+        }
+        catch (const std::bad_any_cast& e)
+        {
+            return e.what();
+        }
+        catch (const std::invalid_argument& e)
+        {
+            return e.what();
+        }
+        catch (const std::exception& e)
+        {
+            return e.what();
+        }
     }
 
     bool validate(const std::any &data) override
     {
+        bool checker = true;
         return true;
     }
 
