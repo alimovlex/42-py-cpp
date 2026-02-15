@@ -284,11 +284,6 @@ int main()
 
     for (; itr1 != polymorf_all.end() && itr2 != test_data.end(); ++itr1, ++itr2)
         test_data_processor(*itr1, *itr2);
-    /*
-    for (auto& processor: polymorf_all)
-        for(auto& data: test_data)
-            test_data_processor(processor, data);
-    */
 
     std::cout << "Foundation system online. Nexus ready for advanced streams." << std::endl;
 
