@@ -22,7 +22,7 @@ class DataStream
         this->criteria = criteria;
         return databatch;
     }
-    virtual std::map<std::string, std::variant<std::string, int, double>> get_stats();
+    virtual std::map<std::string, std::variant<std::string, int, double>> get_stats() = 0;
 
     virtual ~DataStream() = default;
 };
@@ -100,7 +100,7 @@ class EventStream : public DataStream
 class StreamProcessor
 {
     public:
-    std::vector<DataStream> streams;
+    std::vector<std::unique_ptr<DataStream>> streams;
     std::vector<std::string> results;
 };
 
