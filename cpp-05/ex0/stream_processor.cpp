@@ -1,8 +1,9 @@
+#include <cstddef>
+#include <exception>
 #include <iostream>
 #include <stdexcept>
 #include <memory>
 #include <numeric>
-#include <iomanip>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -146,6 +147,7 @@ class TextProcessor : public DataProcessor
 
     bool validate(const std::any &data) override
     {
+        this->data = data;
         bool checker = (data.type() == typeid(std::string));
         if (checker)
             std::cout << "Validation: Text data verified" << std::endl;
@@ -186,17 +188,48 @@ class LogProcessor : public DataProcessor
     public:
     std::string process(const std::any &data) override
     {
-        return "";
+        this->data = data;
+        std::string str;
+        try 
+        {
+        if (auto text_data = std::any_cast<std::string>(&this->data))
+        {
+            str = *text_data;
+            if (str.find("ERROR") != std::string::npos)
+                throw std::runtime_error("Connection timeout");
+        }
+        } 
+        catch (const std::exception& e) 
+        {
+            return e.what();
+        }
+        return str.insert(0, "Processing data: ");
     }
 
     bool validate(const std::any &data) override
     {
-        return true;
+        this->data = data;
+        bool checker = (data.type() == typeid(std::string));
+        if (checker)
+            std::cout << "Validation: Log entry verified" << std::endl;
+        return checker;
     }
 
     std::string format_output(const std::string &result) override
     {
-        return "";
+        this->result = result;
+        std::string str, str_err = "Output: [ALERT] ERROR level detected: Connection timeout";
+        if (auto text_data = std::any_cast<std::string>(&this->data))
+        {
+            str = *text_data;
+            if (str.find("ERROR") != std::string::npos)
+                return str_err;
+            else
+                return str.insert(0, "Output: [INFO] INFO level detected: ");
+            return str;
+        }
+        else 
+            return "";
     }
 };
 
