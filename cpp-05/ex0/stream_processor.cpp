@@ -154,7 +154,30 @@ class TextProcessor : public DataProcessor
 
     std::string format_output(const std::string &result) override
     {
-        return "";
+        this->result = result;
+    
+        if (auto text_data = std::any_cast<std::string>(&this->data))
+        {
+            size_t length_text = text_data->length();
+            size_t nbr_of_words = 0;
+            std::string str = "Output: Processed ";
+        
+            for (char char_ : *text_data)
+            {
+                if (char_ == ' ')
+                    nbr_of_words++;
+            }
+            if (length_text > 0)
+                nbr_of_words++;
+            
+            str += std::to_string(length_text);
+            str += " characters, ";
+            str += std::to_string(nbr_of_words);
+            str += " words";
+            return str;
+        } 
+        else
+            return "It has to be a string!";
     }
 };
 
