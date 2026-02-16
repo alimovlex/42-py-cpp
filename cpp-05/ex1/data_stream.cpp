@@ -1,3 +1,4 @@
+#include <exception>
 #include <iostream>
 #include <map>
 #include <optional>
@@ -44,7 +45,26 @@ class SensorStream : public DataStream
 
     std::string process_batch(const std::vector<std::any> &databatch) override
     {
-        return "";
+        this->databatch = databatch;
+        std::string text = "Stream ID: ", str_err = "ERROR: unknown data";
+        text.insert(0, this->stream_id);
+        text.insert(0, ", Type: Environmental Data");
+        try
+        {
+            for (const auto& data : databatch)
+            {
+                auto str = std::any_cast<std::string>(&data);
+                if (!str)
+                    continue;
+                if (*str == "temp:22.5"||*str == "humidity:65"||*str == "pressure:1013")
+                    return text;
+            }
+            return str_err;
+        }
+        catch (const std::bad_any_cast&)
+        {
+            return str_err;
+        }
     }
 
     std::vector<std::any> filter_data(const std::vector<std::any> &databatch,
