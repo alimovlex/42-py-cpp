@@ -79,7 +79,8 @@ class SensorStream : public DataStream
         std::vector<std::any> filtered_results;
         bool has_special_marker = false;
         std::string data_str;
-
+        this->databatch = databatch;
+        this->criteria = criteria;
         // Extract the search string once outside the loop to avoid repeated .value() calls
         const std::string* search_crit = nullptr;
         if (criteria.has_value())
@@ -107,6 +108,12 @@ class SensorStream : public DataStream
             if (matches)
                 filtered_results.push_back(item);
         }
+
+            // If the entire batch finished and we never saw a special marker,
+            // the results are invalid per your original logic.
+            if (has_special_marker == false)
+                return {};
+
             return filtered_results;
     }
 
