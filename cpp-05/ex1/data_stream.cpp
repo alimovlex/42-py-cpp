@@ -54,15 +54,16 @@ class SensorStream : public DataStream
         {
             for (const auto& data : databatch)
             {
-                //if (!str) continue;
                 if (auto str = std::any_cast<std::string>(&data))
+                {
                     data_str = *str;
-                else
-                    continue;
-                if (data_str.find("temp:22.5") != std::string::npos
-                    ||data_str.find("humidity:65") != std::string::npos
-                    ||data_str.find("pressure:1013") != std::string::npos)
-                    return text;
+                    if (data_str == "temp:22.5"||data_str == "humidity:65"
+                        ||data_str == "pressure:1013")
+                        return text;
+                }
+                else if (!str)
+                        continue;
+
             }
             return str_err;
         }
@@ -76,41 +77,36 @@ class SensorStream : public DataStream
     const std::optional<std::string> &criteria) override
     {
         std::vector<std::any> filtered_results;
+        bool has_special_marker = false;
+        std::string data_str;
 
-            // First: check if any special marker exists
-            bool has_special_marker = false;
-            for (const auto &item : databatch)
-            {
-                const auto str = std::any_cast<std::string>(&item);
-                if (!str)
-                    continue;
+        // Extract the search string once outside the loop to avoid repeated .value() calls
+        const std::string* search_crit = nullptr;
+        if (criteria.has_value())
+            search_crit = &criteria.value();
 
-                if (*str == "temp:22.5" || *str == "humidity:65" || *str == "pressure:1013")
-                {
-                    has_special_marker = true;
-                    break;
-                }
-            }
+        for (const auto &item : databatch)
+        {
+            if (auto str = std::any_cast<std::string>(&item))
+                data_str = *str;
+            else if (!str)
+                continue;
 
-            if (!has_special_marker)
-                return filtered_results;
+            // 1. Marker Detection (The Gatekeeper)
+            // We only need to find it once per batch
+            if (has_special_marker == false)
+                if (data_str == "temp:22.5"
+                    || data_str == "humidity:65"
+                    || data_str == "pressure:1013")
+                        has_special_marker = true;
 
-            // Second: filter in a single loop with flat conditions
-            const bool has_criteria = criteria.has_value();
-            const std::string crit = has_criteria ? criteria.value() : std::string{};
-
-            for (const auto &item : databatch)
-            {
-                const auto str = std::any_cast<std::string>(&item);
-                if (!str)
-                    continue;
-
-                if (has_criteria && str->find(crit) == std::string::npos)
-                    continue;
-
+            bool matches = true;
+            if (search_crit != nullptr)
+                if (data_str.find(*search_crit) == std::string::npos)
+                    matches = false;
+            if (matches)
                 filtered_results.push_back(item);
-            }
-
+        }
             return filtered_results;
     }
 
