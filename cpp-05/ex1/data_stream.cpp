@@ -45,18 +45,23 @@ class SensorStream : public DataStream
 
     std::string process_batch(const std::vector<std::any> &databatch) override
     {
+        //if (str.find("ERROR") != std::string::npos)
         this->databatch = databatch;
-        std::string text = "Stream ID: ", str_err = "ERROR: unknown data";
+        std::string text = "Stream ID: ", str_err = "ERROR: unknown data", data_str;
         text.insert(0, this->stream_id);
         text.insert(0, ", Type: Environmental Data");
         try
         {
             for (const auto& data : databatch)
             {
-                auto str = std::any_cast<std::string>(&data);
-                if (!str)
+                //if (!str) continue;
+                if (auto str = std::any_cast<std::string>(&data))
+                    data_str = *str;
+                else
                     continue;
-                if (*str == "temp:22.5"||*str == "humidity:65"||*str == "pressure:1013")
+                if (data_str.find("temp:22.5") != std::string::npos
+                    ||data_str.find("humidity:65") != std::string::npos
+                    ||data_str.find("pressure:1013") != std::string::npos)
                     return text;
             }
             return str_err;
@@ -70,7 +75,43 @@ class SensorStream : public DataStream
     std::vector<std::any> filter_data(const std::vector<std::any> &databatch,
     const std::optional<std::string> &criteria) override
     {
-        return databatch;
+        std::vector<std::any> filtered_results;
+
+            // First: check if any special marker exists
+            bool has_special_marker = false;
+            for (const auto &item : databatch)
+            {
+                const auto str = std::any_cast<std::string>(&item);
+                if (!str)
+                    continue;
+
+                if (*str == "temp:22.5" || *str == "humidity:65" || *str == "pressure:1013")
+                {
+                    has_special_marker = true;
+                    break;
+                }
+            }
+
+            if (!has_special_marker)
+                return filtered_results;
+
+            // Second: filter in a single loop with flat conditions
+            const bool has_criteria = criteria.has_value();
+            const std::string crit = has_criteria ? criteria.value() : std::string{};
+
+            for (const auto &item : databatch)
+            {
+                const auto str = std::any_cast<std::string>(&item);
+                if (!str)
+                    continue;
+
+                if (has_criteria && str->find(crit) == std::string::npos)
+                    continue;
+
+                filtered_results.push_back(item);
+            }
+
+            return filtered_results;
     }
 
     std::map<std::string, std::variant<std::string, int, double>> get_stats() override
