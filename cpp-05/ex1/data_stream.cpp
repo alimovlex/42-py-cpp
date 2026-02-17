@@ -10,13 +10,14 @@
 
 void print_any_vector(const std::vector<std::any>& databatch)
 {
+    std::cout << "[";
     for (const auto& element : databatch)
     {
         // adjust type as needed
         const auto& str = std::any_cast<const std::string&>(element);
-        std::cout << str << " ";
+        std::cout << str << ", ";
     }
-    std::cout << std::endl;
+    std::cout << "]" << std::endl;
 }
 
 class DataStream
@@ -315,7 +316,32 @@ class EventStream : public DataStream
 
     std::string process_batch(const std::vector<std::any> &databatch) override
     {
-        return "";
+        this->databatch = databatch;
+        std::string text = "Stream ID: ", str_err = "ERROR: unknown data", data_str;
+        text.append(this->stream_id);
+        text.insert(0, "Type: System Events\n");
+        try
+        {
+            for (const auto& data : databatch)
+            {
+                if (auto str = std::any_cast<std::string>(&data))
+                {
+                    data_str = *str;
+                    if (data_str == "login"
+                        ||data_str == "error"
+                        ||data_str == "logout")
+                        return text;
+                }
+                else if (!str)
+                        continue;
+
+            }
+            return str_err;
+        }
+        catch (const std::bad_any_cast&)
+        {
+            return str_err;
+        }
     }
 
     std::vector<std::any> filter_data(const std::vector<std::any> &databatch,
@@ -349,7 +375,7 @@ int test_data_stream(std::unique_ptr<DataStream>& test, const std::string& strea
     std::visit([](auto&& x){ std::cout << x << " "; }, dict[key_one]);
     std::cout << key_one << ", " << key_two << ": ";
     std::visit([](auto&& x){ std::cout << x << " "; }, dict[key_two]);
-    std::cout << std::endl;
+    std::cout << std::endl << std::endl;
     return 0;
 }
 
