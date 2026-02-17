@@ -182,7 +182,31 @@ class TransactionStream : public DataStream
 
     std::string process_batch(const std::vector<std::any> &databatch) override
     {
-        return "";
+        this->databatch = databatch;
+        std::string text = "Stream ID: ", str_err = "ERROR: unknown data", data_str;
+        text.append(this->stream_id);
+        text.insert(0, "Type: Financial Data\n");
+        try
+        {
+            for (const auto& data : databatch)
+            {
+                if (auto str = std::any_cast<std::string>(&data))
+                {
+                    data_str = *str;
+                    if (data_str == "buy:100"||data_str == "sell:150"
+                        ||data_str == "buy:75")
+                        return text;
+                }
+                else if (!str)
+                        continue;
+
+            }
+            return str_err;
+        }
+        catch (const std::bad_any_cast&)
+        {
+            return str_err;
+        }
     }
 
     std::vector<std::any> filter_data(const std::vector<std::any> &databatch,
