@@ -557,7 +557,13 @@ int main()
     test_data_stream(test, "Event", lst_event, "nbr_event", "nbr_error");
 
     StreamProcessor processor;
-    //processor.add_stream(test);
+    processor.add_stream(std::make_unique<SensorStream>("SENSOR_001"));
+    processor.add_stream(std::make_unique<TransactionStream>("TRANS_001"));
+    processor.add_stream(std::make_unique<EventStream>("EVENT_001"));
+
+    std::vector<std::vector<std::any>> data_batches = {lst_data, lst_transac, lst_event};
+
+    processor.process_unified(data_batches, "High-priorty data only");
 
     return 0;
 }
