@@ -272,37 +272,37 @@ class TransactionStream : public DataStream
                 if (data_str == "buy:100"
                     || data_str == "sell:150"
                     || data_str == "buy:75")
+                {
+                    read_pairs++;
+                    size_t pos = data_str.find(':');
+                    if (pos != std::string::npos)
                     {
-                        read_pairs++;
-                        size_t pos = data_str.find(':');
-                        if (pos != std::string::npos)
-                        {
-                            std::string key = data_str.substr(0, pos);
-                            int value = std::stoi(data_str.substr(pos + 1));
-                            // Accumulate (stats[key] = stats[key] + value)
-                            totals[key] += value;
-                        }
+                        std::string key = data_str.substr(0, pos);
+                        int value = std::stoi(data_str.substr(pos + 1));
+                        // Accumulate (stats[key] = stats[key] + value)
+                        totals[key] += value;
                     }
                 }
-                // 2. Calculate net_flow after the loop
-                int net_flow = totals["buy"] - totals["sell"];
-                // 3. Prepare the final variant map
-                std::map<std::string, std::variant<std::string, int, double>> results;
-                results["operations"] = read_pairs;
-                results["buy"]        = totals["buy"];
-                results["sell"]       = totals["sell"];
-                results["net_flow"]   = net_flow;
-                return results;
             }
-            catch (const std::exception& e)
-            {
-                std::cout << "Provide only financial data" << std::endl;
-                // Match the Python fallback return: {"operations": 0, "net_flow": 0}
-                std::map<std::string, std::variant<std::string, int, double>> error_stats;
-                error_stats["operations"] = 0;
-                error_stats["net_flow"]   = 0;
-                return error_stats;
-            }
+            // 2. Calculate net_flow after the loop
+            int net_flow = totals["buy"] - totals["sell"];
+            // 3. Prepare the final variant map
+            std::map<std::string, std::variant<std::string, int, double>> results;
+            results["operations"] = read_pairs;
+            results["buy"]        = totals["buy"];
+            results["sell"]       = totals["sell"];
+            results["net_flow"]   = net_flow;
+            return results;
+        }
+        catch (const std::exception& e)
+        {
+            std::cout << "Provide only financial data" << std::endl;
+            // Match the Python fallback return: {"operations": 0, "net_flow": 0}
+            std::map<std::string, std::variant<std::string, int, double>> error_stats;
+            error_stats["operations"] = 0;
+            error_stats["net_flow"]   = 0;
+            return error_stats;
+        }
     }
 };
 
