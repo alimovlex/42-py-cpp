@@ -6,7 +6,6 @@
 #include <variant>
 #include <any>
 #include <vector>
-#include <array>
 #include <memory>
 
 void print_any_vector(const std::vector<std::any>& databatch)
