@@ -14,8 +14,9 @@ void print_any_vector(const std::vector<std::any>& databatch)
     {
         // adjust type as needed
         const auto& str = std::any_cast<const std::string&>(element);
-        std::cout << str << std::endl;
+        std::cout << str << " ";
     }
+    std::cout << std::endl;
 }
 
 class DataStream
@@ -193,7 +194,8 @@ class TransactionStream : public DataStream
                 if (auto str = std::any_cast<std::string>(&data))
                 {
                     data_str = *str;
-                    if (data_str == "buy:100"||data_str == "sell:150"
+                    if (data_str == "buy:100"
+                        ||data_str == "sell:150"
                         ||data_str == "buy:75")
                         return text;
                 }
