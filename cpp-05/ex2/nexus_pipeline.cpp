@@ -16,7 +16,8 @@ public:
 };
 
 // --- Stage Classes ---
-class InputStage : public ProcessingStage {
+class InputStage : public ProcessingStage 
+{
 public:
     std::any process(std::any data) override
     {
@@ -27,7 +28,8 @@ public:
     }
 };
 
-class TransformStage : public ProcessingStage {
+class TransformStage : public ProcessingStage 
+{
 public:
     std::any process(std::any data) override {
         std::cout << "Stage 2: Data transformation and enrichment" << std::endl;
@@ -37,7 +39,8 @@ public:
     }
 };
 
-class OutputStage : public ProcessingStage {
+class OutputStage : public ProcessingStage 
+{
 public:
     std::any process(std::any data) override
     {
@@ -47,23 +50,22 @@ public:
 };
 
 // --- Abstract Base Class ---
-class ProcessingPipeline {
+class ProcessingPipeline 
+{
 public:
     std::string pipeline_id;
     std::vector<std::unique_ptr<ProcessingStage>> stages;
 
     virtual ~ProcessingPipeline() = default;
 
-    void add_stage(std::unique_ptr<ProcessingStage> stage)
-    {
-        stages.push_back(std::move(stage));
-    }
+    void add_stage(std::unique_ptr<ProcessingStage> stage) { stages.push_back(std::move(stage)); }
 
     virtual void process(std::any data) = 0; // Pure virtual
 };
 
 // --- Adapter Classes ---
-class JSONAdapter : public ProcessingPipeline {
+class JSONAdapter : public ProcessingPipeline 
+{
 public:
     JSONAdapter(std::string id)
     {
@@ -71,13 +73,17 @@ public:
         std::cout << "Pipeline " << pipeline_id << std::endl;
     }
 
-    void process(std::any data) override {
+    void process(std::any data) override 
+    {
         std::cout << "Processing JSON data through pipeline..." << std::endl;
-        try {
+        try 
+        {
             auto* data_map = std::any_cast<std::map<std::string, std::any>>(&data);
-            if (data_map) {
+            if (data_map) 
+            {
                 // Simplified print for demo
-                std::cout << "Input: {sensor: " << std::any_cast<const char*>(data_map->at("sensor")) << ", ...}" << std::endl;
+                std::cout << "Input: {sensor: " << std::any_cast<const char*>(data_map->at("sensor")) 
+                << ", ...}" << std::endl;
                 if (data_map->count("sensor") && data_map->count("value") && data_map->count("unit"))
                 {
                     double val = std::any_cast<double>(data_map->at("value"));
@@ -89,18 +95,22 @@ public:
                     else if (val > 15 && val < 23)
                         temp_cal = "avg";
 
-                    std::cout << "Output: Processed temperature reading: " << val << "°C (" << temp_cal << ")" << std::endl;
+                    std::cout << "Output: Processed temperature reading: " << val << "°C (" 
+                    << temp_cal << ")" << std::endl;
                 }
             }
             else
                 throw std::runtime_error("Type mismatch");
-        } catch (...) {
+        } 
+        catch (...) 
+        {
             std::cout << "Failed processing data!" << std::endl;
         }
     }
 };
 
-class CSVAdapter : public ProcessingPipeline {
+class CSVAdapter : public ProcessingPipeline 
+{
 public:
     CSVAdapter(std::string id)
     {
@@ -128,57 +138,72 @@ public:
     }
 };
 
-class StreamAdapter : public ProcessingPipeline {
+class StreamAdapter : public ProcessingPipeline 
+{
 public:
-    StreamAdapter(std::string id)
-    {
-        pipeline_id = id;
-    }
+    StreamAdapter(std::string id) { pipeline_id = id; }
 
-    void process(std::any data) override {
+    void process(std::any data) override 
+    {
         std::cout << "Processing Stream data through same pipeline..." << std::endl;
-        if (data.type() == typeid(const char*) || data.type() == typeid(std::string)) {
+        if (data.type() == typeid(const char*) || data.type() == typeid(std::string)) 
+        {
             std::cout << "Input: Real-time sensor stream" << std::endl;
             std::cout << "Transform: Aggregated and filtered" << std::endl;
             std::cout << "Output: Stream summary: 5 readings, avg: 22.1°C" << std::endl;
-        } else {
+        } 
+        else
             std::cout << "Failed processing data!" << std::endl;
-        }
     }
 };
 
 // --- Manager Class ---
-class NexusManager {
+class NexusManager 
+{
     std::vector<std::shared_ptr<ProcessingPipeline>> pipelines;
 
 public:
-    void add_pipeline(std::shared_ptr<ProcessingPipeline> pipeline) {
+    void add_pipeline(std::shared_ptr<ProcessingPipeline> pipeline) 
+    {
         pipelines.push_back(pipeline);
     }
 
-    void process_data(std::any data) {
-        for (auto& p : pipelines) p->process(data);
+    void process_data(std::any data) 
+    {
+        for (auto& p : pipelines) 
+            p->process(data);
     }
 
-    void demonstrate_chaining() {
+    void demonstrate_chaining() 
+    {
         std::cout << "\n=== Pipeline Chaining Demo ===" << std::endl;
-        for (size_t i = 0; i < pipelines.size(); ++i) {
-            std::cout << "Pipeline " << pipelines[i]->pipeline_id << (i == pipelines.size() - 1 ? "" : " -> ");
+        for (size_t i = 0; i < pipelines.size(); ++i) 
+        {
+            std::cout << "Pipeline " << pipelines[i]->pipeline_id; 
+            if(i == pipelines.size() - 1) 
+                std::cout << ""; 
+            else
+                std::cout << " -> ";
         }
-        std::cout << "\nData flow: Raw -> Processed -> Analyzed -> Stored\n" << std::endl;
+        std::cout << std::endl;
+        std::cout << "Data flow: Raw -> Processed -> Analyzed -> Stored\n" << std::endl;
         std::cout << "Chain result: 100 records processed through " << pipelines.size() << "-stage pipeline" << std::endl;
         std::cout << "Performance: 95% efficiency, 0.2s total processing time" << std::endl;
     }
 
-    void demonstrate_error_recovery() {
+    void demonstrate_error_recovery() 
+    {
         std::cout << "\n=== Error Recovery Test ===" << std::endl;
         std::cout << "Simulating pipeline failure..." << std::endl;
         std::any test_data = 12345;
 
-        for (size_t i = 0; i < pipelines.size(); ++i) {
-            if (i + 1 == 2) {
+        for (size_t i = 0; i < pipelines.size(); ++i) 
+        {
+            if (i + 1 == 2) 
+            {
                 std::cout << "Error detected in Stage 2: Invalid data format" << std::endl;
-                std::cout << "Pipeline " << pipelines[i]->pipeline_id << " failed with data type: " << test_data.type().name() << std::endl;
+                std::cout << "Pipeline " << pipelines[i]->pipeline_id << " failed with data type: " 
+                << test_data.type().name() << std::endl;
                 std::cout << "Recovery initiated: Switching to backup processor" << std::endl;
 
                 std::string backup_data = "user,action,timestamp";
@@ -190,7 +215,8 @@ public:
     }
 };
 
-int main() {
+int main() 
+{
     std::cout << "=== CODE NEXUS - ENTERPRISE PIPELINE SYSTEM ===\n" << std::endl;
     std::cout << "Initializeing Nexus Manager..." << std::endl;
     std::cout << "Pipeline capacity: 1000 streams/second\n" << std::endl;
