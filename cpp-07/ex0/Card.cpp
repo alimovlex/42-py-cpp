@@ -6,12 +6,13 @@
 
 std::map<std::string, std::string> Card::get_card_info()
 {
-    return {
+    std::map<std::string, std::string> dict = {
             {"name", name},
             {"cost", std::to_string(cost)},
             {"rarity", rarity},
             {"type", "Creature"}
     };
+    return dict;
 }
 
 bool Card::is_playable(int mana)

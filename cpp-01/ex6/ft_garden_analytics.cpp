@@ -215,7 +215,12 @@ public:
                 if (vec[i]->get_height() < 0) { ok = false; break; }
                 ++i;
             }
-            std::cout << "Height validation test: " << (ok ? "true" : "false") << "\n";
+            std::cout << "Height validation test: ";
+            if (ok)
+            	std::cout << "true";
+            else
+            	std::cout << "false";
+            std::cout << std::endl;
         }
     };
 };
