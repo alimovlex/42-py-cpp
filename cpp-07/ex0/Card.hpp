@@ -10,7 +10,7 @@
 class Card
 {
 public:
-    std::string name, rarity;
+    std::string name, rarity, type;
     int cost, available_mana = 0;
     Card(std::string& name, int cost, std::string& rarity): name(name), rarity(rarity), cost(cost) {}
     virtual std::map<std::string, std::string> play(
