@@ -13,9 +13,11 @@ public:
     int cost;
 
     std::string get_effect_type();
-    //std::map<std::string, std::string> play(std::map<std::string, std::string> &game_state) override;
+    std::map<std::string, std::string> play(std::map<std::string, std::string> &game_state) override;
+    std::map<std::string, std::any> resolve_effect(std::vector<std::string>& targets);
+    std::string toString();
 
-    SpellCard(std::string name, int cost, std::string rarity, std::string effect_type):
+    SpellCard(std::string& name, int cost, std::string& rarity, std::string& effect_type):
     Card(name, cost, rarity), name(name), cost(cost), rarity(rarity), effect_type(effect_type) {}
 };
 

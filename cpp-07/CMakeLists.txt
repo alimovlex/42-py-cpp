@@ -8,8 +8,10 @@ add_executable(ex0 ex0/main.cpp
                ex0/Card.cpp)
 
 add_executable(ex1 ex1/main.cpp
-               ex1/ArtifactCard.cpp
-               ex1/ArtifactCard.hpp ex1/Deck.cpp ex1/Deck.hpp ex1/SpellCard.cpp ex1/SpellCard.hpp)
+               ex0/Card.cpp
+               ex1/Deck.cpp
+               ex1/SpellCard.cpp
+               ex1/ArtifactCard.cpp)
 
 add_executable(ex2 ex2/main.cpp)
 
