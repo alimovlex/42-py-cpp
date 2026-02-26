@@ -24,7 +24,9 @@ bool Deck::remove_card(const std::string& card_name)
 
 void Deck::shuffle()
 {
-    std::random_shuffle(card_added.begin(), card_added.end());
+    std::random_device rd;
+    std::mt19937 g(rd());
+    std::shuffle(card_added.begin(), card_added.end(), g);
 }
 
 std::map<std::string, std::string> Deck::draw_card()

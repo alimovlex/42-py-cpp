@@ -34,6 +34,26 @@ int main()
             }
     };
     std::cout << "=== DataDeck Deck Builder ===\n" << std::endl;
-    //Deck deck = Deck();
+    Deck deck;
+
     return 0;
 }
+
+/*
+     * deck = Deck()
+     * deck.add_card(cards)
+     * print(f"Deck stats: {deck.get_deck_stats()}")
+     * print()
+     * print("Drawing and playing cards:")
+     * print()
+     * print(f"Play result: {deck.draw_card()}")
+     * deck.remove_card("Lightning Bolt")
+     * print()
+     * print(f"Play result: {deck.draw_card()}")
+     * deck.remove_card("Mana Crystal")
+     * print()
+     * print(f"Play result: {deck.draw_card()}")
+     * print()
+    # print(f"Deck stats: {deck.get_deck_stats()}")
+    print("Polymorphism in action: Same interface, different card behaviors!")
+     */

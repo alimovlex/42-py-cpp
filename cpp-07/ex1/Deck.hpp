@@ -9,9 +9,10 @@
 #include <memory>
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include "../ex0/Card.hpp"
 
-class Deck: public Card {
+class Deck {
 public:
     std::vector<std::shared_ptr<Card>> card_added;
 
