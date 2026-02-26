@@ -35,7 +35,15 @@ int main()
     };
     std::cout << "=== DataDeck Deck Builder ===\n" << std::endl;
     Deck deck;
-
+    std::shared_ptr<Card> card;
+    deck.add_card(card);
+    //std::cout << "Deck stats: " << deck.get_deck_stats(); //PRINTING DICTIONARY!!!
+    std::cout << "Drawing and playing cards: " << std::endl;
+    //std::cout << "Play result: " << deck.draw_card(); //PRINTING DICTIONARY!!!
+    //deck.remove_card("Mana Crystal");
+    //std::cout << "Play result: " << deck.draw_card(); //PRINTING DICTIONARY!!!
+    //std::cout << "Deck stats: " << deck.get_deck_stats(); //PRINTING DICTIONARY!!!
+    std::cout << "Polymorphism in action: Same interface, different card behaviors!" << std::endl;
     return 0;
 }
 
