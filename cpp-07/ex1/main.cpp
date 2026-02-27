@@ -36,9 +36,8 @@ int main()
     std::cout << "=== DataDeck Deck Builder ===\n" << std::endl;
     std::cout << "Building deck with different card types..." << std::endl;
     Deck deck;
-    std::shared_ptr<Card> card;
-    std::make_shared<Deck>();
-    deck.add_card(card);
+    /*
+    deck.add_card(cards);
     std::cout << "Deck stats: " << std::endl;
     for (const auto &kv : deck.get_deck_stats())
         std::cout << kv.first << " -> " << kv.second << std::endl;
@@ -59,7 +58,7 @@ int main()
     std::cout << "Play result: " << std::endl;
     for (const auto &kv : deck.draw_card())
         std::cout << kv.first << " -> " << kv.second << std::endl;
-
+    */
     std::cout << "Polymorphism in action: Same interface, different card behaviors!" << std::endl;
     return 0;
 }
