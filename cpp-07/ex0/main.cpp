@@ -12,11 +12,13 @@ int main()
     std::map<std::string, std::string> game_state;
 
     std::cout << "=== DataDeck Card Foundation ===\n" << std::endl;
+    std::cout << "Testing Abstract Base Class Design:\n" << std::endl;
     std::cout << "CreatureCard Info:" << std::endl;
     for (const auto &kv : dict)
         std::cout << kv.first << " -> " << kv.second << std::endl;
-    std::cout << "Playing Fire Dragon with " << mana << " mana available:" << std::endl;
 
+    std::cout << std::endl;
+    std::cout << "Playing Fire Dragon with " << mana << " mana available:" << std::endl;
     std::ostringstream oss;
     oss << std::boolalpha << value;
     std::string result = oss.str();
@@ -27,6 +29,7 @@ int main()
     for (const auto &kv : dict)
         std::cout << kv.first << " -> " << kv.second << std::endl;
 
+    std::cout << std::endl;
     std::cout << name << " attacks Goblin Warrior:" << std::endl;
     mana -= 3;
     std::cout << "Testing insufficient mana (" << mana << " available)" << std::endl;
