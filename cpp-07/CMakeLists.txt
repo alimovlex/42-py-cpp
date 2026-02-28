@@ -17,6 +17,8 @@ add_executable(ex2 ex2/main.cpp
                    ex2/EliteCard.cpp
                    ex0/Card.cpp)
 
-add_executable(ex3 ex3/main.cpp)
+add_executable(ex3 ex3/main.cpp
+                   ex3/GameEngine.cpp
+                   ex3/FantasyCardFactory.cpp)
 
 add_executable(ex4 ex4/main.cpp)

@@ -22,7 +22,7 @@ int main()
                     {"effect_type", "damage"}
             }
     };
-
+    //TODO: resolve issue in type conversion and object initialization here!!!
     std::array<std::string, 2> target = {"Enemy1", "Enemy2"};
     std::cout << "=== DataDeck Ability System ===\n" << std::endl;
     //EliteCard eliteCard = EliteCard();
