@@ -6,7 +6,7 @@
 
 std::string SpellCard::get_effect_type()
 {
-    return this->effect_type;
+    return effect_type;
 }
 
 std::map<std::string, std::string> SpellCard::play(std::map<std::string, std::string> &game_state)

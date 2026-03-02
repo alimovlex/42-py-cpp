@@ -36,6 +36,8 @@ int main()
     std::cout << "=== DataDeck Deck Builder ===\n" << std::endl;
     std::cout << "Building deck with different card types..." << std::endl;
     Deck deck;
+    //TODO: resolve issue in type conversion and object initialization here!!!
+
     /*
     deck.add_card(cards);
     std::cout << "Deck stats: " << std::endl;
