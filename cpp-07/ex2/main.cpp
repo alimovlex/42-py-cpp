@@ -11,13 +11,13 @@ int main()
     std::vector<std::map<std::string, std::string>> cards = {
             {
                     {"name", "Fireball"},
-                    {"cost", std::to_string(4)},
+                    {"cost", "4"},
                     {"rarity", "Uncommon"},
                     {"effect_type", "damage"}
             },
             {
                     {"caster", "Arcane Warrior"},
-                    {"cost", std::to_string(8)},
+                    {"cost", "8"},
                     {"rarity", "Common"},
                     {"effect_type", "damage"}
             }

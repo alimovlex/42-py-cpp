@@ -11,25 +11,25 @@ int main()
             {
             {"type", "spell"},
             {"name", "Lightning Bolt"},
-            {"cost", std::to_string(3)},
+            {"cost", "3"},
             {"rarity", "Common"},
             {"effect_type", "damage"}
             },
             {
             {"type", "artifact"},
             {"name", "Mana Crystal"},
-            {"cost", std::to_string(2)},
+            {"cost", "2"},
             {"rarity", "Common"},
-            {"durability", std::to_string(5)},
+            {"durability", "5"},
             {"effect_type", "Permanent: +1 mana per turn"}
             },
             {
             {"type", "creature"},
             {"name", "Fire Dragon"},
-            {"cost", std::to_string(5)},
+            {"cost", "5"},
             {"rarity", "Legendary"},
-            {"attack", std::to_string(7)},
-            {"health", std::to_string(5)},
+            {"attack", "7"},
+            {"health", "5"},
             {"effect_type", "Creature summoned to battlefield"}
             }
     };
