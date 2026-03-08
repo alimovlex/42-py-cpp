@@ -26,7 +26,6 @@ public:
     std::map<std::string, std::map<std::string, std::string>> get_tournament_stats();
     bool is_playable(int available_mana);
     std::string toString();
-
     TournamentCard(std::string& name, int cost, std::string& rarity, int attack_power, int defense):
     Card(name, cost, rarity), name(name), cost(cost), rarity(rarity), attack_power(attack_power), defense(defense),
     wins(0), losses(0), base_rating(1200), rating(base_rating) {}

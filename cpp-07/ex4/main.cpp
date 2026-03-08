@@ -3,9 +3,13 @@
 //
 
 #include <iostream>
+#include "TournamentPlatform.hpp"
 
 int main()
 {
-    std::cout << "";
+    std::cout << "=== DataDeck Tournament Platform ===" << std::endl;
+    TournamentPlatform platform;
+    std::cout << "Registering Tournament Cards..." << std::endl;
+    //TODO: FINISH THIS MODULE!!!
     return 0;
 }
