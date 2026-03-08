@@ -19,6 +19,11 @@ add_executable(ex2 ex2/main.cpp
 
 add_executable(ex3 ex3/main.cpp
                    ex3/GameEngine.cpp
-                   ex3/FantasyCardFactory.cpp ex3/AggressiveStrategy.cpp ex3/AggressiveStrategy.hpp)
+                   ex3/FantasyCardFactory.cpp
+                   ex3/AggressiveStrategy.cpp)
 
-add_executable(ex4 ex4/main.cpp)
+add_executable(ex4 ex4/main.cpp
+                   ex4/Rankable.hpp
+                   ex4/TournamentCard.cpp
+                   ex4/TournamentPlatform.cpp
+                   ex0/Card.cpp)
