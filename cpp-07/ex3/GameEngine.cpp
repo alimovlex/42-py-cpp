@@ -4,8 +4,9 @@
 
 #include "GameEngine.hpp"
 
-void GameEngine::configure_engine(CardFactory factory, GameStrategy strategy)
+void GameEngine::configure_engine(std::unique_ptr<CardFactory>& factory, std::unique_ptr<GameStrategy>& strategy)
 {
+    //TODO: IMPLEMENT METHOD HERE!!!
     //this->factory = factory;
     //this->strategy = strategy;
 }
@@ -36,8 +37,8 @@ std::map<std::string, std::string> GameEngine::get_engine_status()
             {"turns_simulated", std::to_string(turns_simulated)},
             {"total_damage", std::to_string(total_damage)},
             {"cards_created", std::to_string(cards_created)},
-            //{"factory_configured", std::to_string(!this->factory)},
-            //{"strategy_configured", std::to_string(!this->strategy)}
+            {"factory_configured", std::to_string(!this->factory)},
+            {"strategy_configured", std::to_string(!this->strategy)}
             //{"strategy_used", strategy.get_strategy_name()}
     };
     return dict;

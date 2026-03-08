@@ -15,7 +15,7 @@ void AggressiveStrategy::display_name()
 std::map<std::string, std::string>
 AggressiveStrategy::execute_turn(std::vector<std::string> &hand, std::vector<std::string> &battlefield)
 {
-
+//TODO: complete method's body here!!!
 }
 
 std::string AggressiveStrategy::get_strategy_name()
@@ -25,5 +25,5 @@ std::string AggressiveStrategy::get_strategy_name()
 
 std::vector<std::string> AggressiveStrategy::prioritize_targets(std::vector<std::string> &list)
 {
-
+//TODO: complete method's body here!!!
 }

@@ -3,16 +3,17 @@
 //
 
 #pragma once
+#include <memory>
 #include "CardFactory.hpp"
 #include "GameStrategy.hpp"
 
 class GameEngine {
 public:
-   //CardFactory factory;
-    //GameStrategy strategy;
+    std::unique_ptr<CardFactory> factory;
+    std::unique_ptr<GameStrategy> strategy;
     int turns_simulated, total_damage, cards_created;
 
-   void configure_engine(CardFactory factory, GameStrategy strategy);
+   void configure_engine(std::unique_ptr<CardFactory>& factory, std::unique_ptr<GameStrategy>& strategy);
    std::map<std::string, std::string> simulate_turn();
    std::map<std::string, std::string> get_engine_status();
 

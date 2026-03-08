@@ -36,17 +36,17 @@ std::map<std::string, std::vector<std::string>> FantasyCardFactory::get_supporte
 
 Card FantasyCardFactory::create_creature(std::string &name_or_power)
 {
-
+//TODO: IMPLEMENT METHOD HERE!!!
 }
 
 Card FantasyCardFactory::create_spell(std::string &name_or_power)
 {
-
+//TODO: IMPLEMENT METHOD HERE!!!
 }
 
 Card FantasyCardFactory::create_artifact(std::string &name_or_power)
 {
-
+//TODO: IMPLEMENT METHOD HERE!!!
 }
 
 std::map<std::string, std::string> FantasyCardFactory::create_themed_deck(int size)
