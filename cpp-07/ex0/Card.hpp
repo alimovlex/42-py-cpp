@@ -1,27 +1,38 @@
-//
-// Created by alalimov on 2/19/26.
-//
+#ifndef CARD_HPP
+#define CARD_HPP
 
-#pragma once
-#include <map>
-#include <any>
 #include <string>
-#include <vector>
+#include <map>
+#include <variant>
 
-class Card
-{
+class Card {
+protected:
+    std::string name;
+    int cost;
+    std::string rarity;
+
 public:
-    std::string name, rarity, type;
-    int cost, available_mana = 0;
-    Card(std::string& name, int cost, std::string& rarity): name(name), rarity(rarity), cost(cost) {}
-    virtual std::map<std::string, std::string> play(
-            std::map<std::string, std::string>& game_state
-    ) = 0;
-
-    virtual std::map<std::string, std::string> get_card_info();
-
-    bool is_playable(int mana);
-
+    Card(std::string name, int cost, std::string rarity)
+        : name(std::move(name)), cost(cost), rarity(std::move(rarity)) {}
+    
     virtual ~Card() = default;
+
+    virtual std::map<std::string, std::variant<std::string, int>> play(std::map<std::string, std::variant<std::string, int>> game_state) = 0;
+    
+    virtual std::map<std::string, std::variant<std::string, int>> get_card_info() const {
+        return {
+            {"name", name},
+            {"cost", cost},
+            {"rarity", rarity}
+        };
+    }
+
+    bool is_playable(int available_mana) const {
+        return available_mana >= cost;
+    }
+
+    std::string getName() const { return name; }
+    int getCost() const { return cost; }
 };
 
+#endif

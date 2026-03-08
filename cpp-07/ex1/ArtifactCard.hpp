@@ -1,26 +1,32 @@
-//
-// Created by alalimov on 2/21/26.
-//
-#pragma once
+#ifndef ARTIFACTCARD_HPP
+#define ARTIFACTCARD_HPP
+
 #include "../ex0/Card.hpp"
 
-class ArtifactCard : public Card
-{
+class ArtifactCard : public Card {
+private:
+    int durability;
+    std::string effect;
+
 public:
+    ArtifactCard(std::string name, int cost, std::string rarity, int durability, std::string effect)
+        : Card(std::move(name), cost, std::move(rarity)), durability(durability), effect(std::move(effect)) {}
 
-    std::string name, rarity, effect;
-    int cost, durability, current_durability;
+    std::map<std::string, std::variant<std::string, int>> play(std::map<std::string, std::variant<std::string, int>> game_state) override {
+        return {
+            {"card_played", name},
+            {"mana_used", cost},
+            {"effect", std::string("Permanent: ") + effect}
+        };
+    }
 
-    int get_durability();
-    int get_current_durability();
-    std::string get_effect();
-
-    std::map<std::string, std::string> play(std::map<std::string, std::string> &game_state) override;
-    std::map<std::string, std::string> activate_ability();
-    void repair(int amount);
-    std::string toString();
-
-    ArtifactCard(std::string& name, int cost, std::string& rarity, int durability, std::string& effect):
-    Card(name, cost, rarity), name(name), cost(cost), rarity(rarity), durability(durability), effect(effect), current_durability(durability) {}
+    std::map<std::string, std::variant<std::string, int>> activate_ability() {
+        return {
+            {"artifact", name},
+            {"ability_activated", 1},
+            {"effect_applied", effect}
+        };
+    }
 };
 
+#endif

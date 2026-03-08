@@ -1,33 +1,91 @@
-//
-// Created by alalimov on 3/8/26.
-//
+#ifndef TOURNAMENTCARD_HPP
+#define TOURNAMENTCARD_HPP
 
-#pragma once
-#include "Rankable.hpp"
 #include "../ex0/Card.hpp"
 #include "../ex2/Combatable.hpp"
+#include "Rankable.hpp"
+#include <string>
+#include <map>
+#include <variant>
+#include <vector>
 
-class TournamentCard: public Card, public Combatable, public Rankable {
+class TournamentCard : public Card, public Combatable, public Rankable {
+private:
+    int attack_power;
+    int health;
+    int wins = 0;
+    int losses = 0;
+    int rating = 1200;
+    std::string card_id;
 
 public:
-    std::string name, rarity;
-    int cost, attack_power, defense, wins, losses, base_rating, rating;
+    TournamentCard(std::string name, int cost, std::string rarity, int attack, int health, std::string id)
+        : Card(std::move(name), cost, std::move(rarity)), attack_power(attack), health(health), card_id(std::move(id)) {}
 
-    std::map<std::string, std::string> play(std::map<std::string, std::string> &game_state) override;
-    std::map<std::string, std::string> get_card_info() override;
-    std::map<std::string, std::string> attack(std::string &target) override;
-    std::map<std::string, std::string> defend(int &incoming_damage) override;
-    std::map<std::string, std::string> get_combat_stats() override;
-    int calculate_rating() override;
-    void update_wins(int wins) override;
-    void update_losses(int losses) override;
-    std::map<std::string, std::string> get_rank_info() override;
+    std::map<std::string, std::variant<std::string, int>> play(std::map<std::string, std::variant<std::string, int>> game_state) override {
+        return {
+            {"card_played", name},
+            {"mana_used", cost},
+            {"effect", std::string("Tournament card entered play")}
+        };
+    }
 
-    std::map<std::string, std::map<std::string, std::string>> get_tournament_stats();
-    bool is_playable(int available_mana);
-    std::string toString();
-    TournamentCard(std::string& name, int cost, std::string& rarity, int attack_power, int defense):
-    Card(name, cost, rarity), name(name), cost(cost), rarity(rarity), attack_power(attack_power), defense(defense),
-    wins(0), losses(0), base_rating(1200), rating(base_rating) {}
+    std::map<std::string, std::variant<std::string, int>> attack(const std::string& target) override {
+        return {
+            {"attacker", name},
+            {"target", target},
+            {"damage", attack_power}
+        };
+    }
+
+    std::map<std::string, std::variant<std::string, int>> defend(int incoming_damage) override {
+        health -= incoming_damage;
+        return {
+            {"defender", name},
+            {"damage_taken", incoming_damage},
+            {"still_alive", health > 0 ? 1 : 0}
+        };
+    }
+
+    std::map<std::string, std::variant<std::string, int>> get_combat_stats() const override {
+        return {
+            {"attack", attack_power},
+            {"health", health}
+        };
+    }
+
+    int calculate_rating() const override {
+        return rating;
+    }
+
+    void update_wins(int w) override {
+        wins += w;
+        rating += 16 * w;
+    }
+
+    void update_losses(int l) override {
+        losses += l;
+        rating -= 16 * l;
+    }
+
+    std::map<std::string, std::variant<std::string, int>> get_rank_info() const override {
+        return {
+            {"rating", rating},
+            {"wins", wins},
+            {"losses", losses}
+        };
+    }
+
+    std::map<std::string, std::variant<std::string, int>> get_tournament_stats() const {
+        return {
+            {"id", card_id},
+            {"name", name},
+            {"rating", rating},
+            {"record", std::to_string(wins) + "-" + std::to_string(losses)}
+        };
+    }
+
+    std::string getId() const { return card_id; }
 };
 
+#endif

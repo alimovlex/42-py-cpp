@@ -1,17 +1,16 @@
-//
-// Created by robot on 2/28/26.
-//
-#pragma once
+#ifndef COMBATABLE_HPP
+#define COMBATABLE_HPP
+
 #include <map>
-#include <any>
 #include <string>
-#include <vector>
+#include <variant>
 
 class Combatable {
 public:
-    virtual std::map<std::string, std::string> attack(std::string& target) = 0;
-    virtual std::map<std::string, std::string> defend(int& incoming_damage) = 0;
-    virtual std::map<std::string, std::string> get_combat_stats() = 0;
     virtual ~Combatable() = default;
+    virtual std::map<std::string, std::variant<std::string, int>> attack(const std::string& target) = 0;
+    virtual std::map<std::string, std::variant<std::string, int>> defend(int incoming_damage) = 0;
+    virtual std::map<std::string, std::variant<std::string, int>> get_combat_stats() const = 0;
 };
 
+#endif

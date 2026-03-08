@@ -1,40 +1,57 @@
 #include <iostream>
-#include <sstream>
+#include <iomanip>
+#include <variant>
 #include "CreatureCard.hpp"
 
-int main()
-{
-    CreatureCard creatureCard("Fire Dragon", 5, "Legendary", 7, 5);
-    std::map<std::string, std::string> dict = creatureCard.get_card_info();
-    std::string name = dict["name"];
-    int mana = 6;
-    bool value = creatureCard.is_playable(mana);
-    std::map<std::string, std::string> game_state;
+void print_dict(const std::map<std::string, std::variant<std::string, int>>& dict) {
+    std::cout << "{";
+    bool first = true;
+    for (auto const& [key, val] : dict) {
+        if (!first) std::cout << ", ";
+        std::cout << "'" << key << "': ";
+        if (std::holds_alternative<std::string>(val)) {
+            std::cout << "'" << std::get<std::string>(val) << "'";
+        } else {
+            std::cout << std::get<int>(val);
+        }
+        first = false;
+    }
+    std::cout << "}" << std::endl;
+}
 
-    std::cout << "=== DataDeck Card Foundation ===\n" << std::endl;
-    std::cout << "Testing Abstract Base Class Design:\n" << std::endl;
-    std::cout << "CreatureCard Info:" << std::endl;
-    for (const auto &kv : dict)
-        std::cout << kv.first << " -> " << kv.second << std::endl;
+int main() {
+    std::cout << "=== DataDeck Card Foundation ===" << std::endl;
+    std::cout << "Testing Abstract Base Class Design:" << std::endl;
 
-    std::cout << std::endl;
-    std::cout << "Playing Fire Dragon with " << mana << " mana available:" << std::endl;
-    std::ostringstream oss;
-    oss << std::boolalpha << value;
-    std::string result = oss.str();
-    std::cout << "Playable: " << result << std::endl;
+    try {
+        CreatureCard dragon("Fire Dragon", 5, "Legendary", 7, 5);
+        
+        std::cout << "CreatureCard Info:" << std::endl;
+        print_dict(dragon.get_card_info());
 
-    dict = creatureCard.play(game_state);
-    std::cout << "Play result: " << std::endl;
-    for (const auto &kv : dict)
-        std::cout << kv.first << " -> " << kv.second << std::endl;
+        std::cout << "Playing Fire Dragon with 6 mana available:" << std::endl;
+        int mana = 6;
+        std::cout << "Playable: " << (dragon.is_playable(mana) ? "True" : "False") << std::endl;
 
-    std::cout << std::endl;
-    std::cout << name << " attacks Goblin Warrior:" << std::endl;
-    mana -= 3;
-    std::cout << "Testing insufficient mana (" << mana << " available)" << std::endl;
-    value = creatureCard.is_valid();
-    std::cout << "Playable: " << std::boolalpha << value << std::endl;
+        std::map<std::string, std::variant<std::string, int>> game_state;
+        auto play_result = dragon.play(game_state);
+        std::cout << "Play result: ";
+        print_dict(play_result);
+
+        std::cout << "Fire Dragon attacks Goblin Warrior:" << std::endl;
+        auto attack_result = dragon.attack_target("Goblin Warrior");
+        std::cout << "Attack result: ";
+        print_dict(attack_result);
+
+        std::cout << "Testing insufficient mana (3 available):" << std::endl;
+        mana = 3;
+        std::cout << "Playable: " << (dragon.is_playable(mana) ? "True" : "False") << std::endl;
+
+        std::cout << "Abstract pattern successfully demonstrated!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
+    }
 
     return 0;
 }
