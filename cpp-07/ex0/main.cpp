@@ -3,7 +3,8 @@
 #include <variant>
 #include "CreatureCard.hpp"
 
-void print_dict(const std::map<std::string, std::variant<std::string, int>> &dict) {
+void print_dict(const std::map<std::string, std::variant<std::string, int>> &dict)
+{
     std::cout << "{";
     bool first = true;
     for (auto const&[key, val]: dict)
