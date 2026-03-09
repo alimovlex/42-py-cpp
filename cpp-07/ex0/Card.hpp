@@ -1,6 +1,4 @@
-#ifndef CARD_HPP
-#define CARD_HPP
-
+#pragma once
 #include <string>
 #include <map>
 #include <variant>
@@ -18,21 +16,9 @@ public:
     virtual ~Card() = default;
 
     virtual std::map<std::string, std::variant<std::string, int>> play(std::map<std::string, std::variant<std::string, int>> game_state) = 0;
-    
-    virtual std::map<std::string, std::variant<std::string, int>> get_card_info() const {
-        return {
-            {"name", name},
-            {"cost", cost},
-            {"rarity", rarity}
-        };
-    }
-
-    bool is_playable(int available_mana) const {
-        return available_mana >= cost;
-    }
-
-    std::string getName() const { return name; }
-    int getCost() const { return cost; }
+    virtual std::map<std::string, std::variant<std::string, int>> get_card_info() const;
+    bool is_playable(int available_mana) const;
+    std::string getName() const;
+    int getCost() const;
 };
 
-#endif
