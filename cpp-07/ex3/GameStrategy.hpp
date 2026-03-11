@@ -1,6 +1,4 @@
-#ifndef GAMESTRATEGY_HPP
-#define GAMESTRATEGY_HPP
-
+#pragma once
 #include <vector>
 #include <map>
 #include <string>
@@ -16,4 +14,3 @@ public:
     virtual std::vector<std::string> prioritize_targets(const std::vector<std::string>& available_targets) = 0;
 };
 
-#endif

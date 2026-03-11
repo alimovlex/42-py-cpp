@@ -26,11 +26,12 @@ void print_dict(const std::map<std::string, std::variant<std::string, int>>& dic
     std::cout << "}" << std::endl;
 }
 
-int main() {
+int main(int argc, char** argv)
+{
     std::cout << "=== DataDeck Game Engine ===" << std::endl;
     
     GameEngine engine;
-    auto factory = std::make_unique<FantasyCardFactory>();
+    std::unique_ptr<FantasyCardFactory> factory = std::make_unique<FantasyCardFactory>();
     auto strategy = std::make_unique<AggressiveStrategy>();
 
     std::cout << "Configuring Fantasy Card Game..." << std::endl;

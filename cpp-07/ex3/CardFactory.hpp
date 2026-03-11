@@ -1,6 +1,4 @@
-#ifndef CARDFACTORY_HPP
-#define CARDFACTORY_HPP
-
+#pragma once
 #include <memory>
 #include <string>
 #include <vector>
@@ -18,4 +16,3 @@ public:
     virtual std::map<std::string, std::variant<std::string, int>> get_supported_types() const = 0;
 };
 
-#endif
