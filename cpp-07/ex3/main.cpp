@@ -7,17 +7,20 @@
 #include "FantasyCardFactory.hpp"
 #include "AggressiveStrategy.hpp"
 
-void print_dict(const std::map<std::string, std::variant<std::string, int>>& dict) {
+void print_dict(const std::map<std::string, std::variant<std::string, int>>& dict)
+{
     std::cout << "{";
     bool first = true;
-    for (auto const& [key, val] : dict) {
-        if (!first) std::cout << ", ";
+    for (auto const& [key, val] : dict)
+    {
+        if (!first)
+            std::cout << ", ";
         std::cout << "'" << key << "': ";
-        if (std::holds_alternative<std::string>(val)) {
+        if (std::holds_alternative<std::string>(val))
             std::cout << "'" << std::get<std::string>(val) << "'";
-        } else {
+        else
             std::cout << std::get<int>(val);
-        }
+
         first = false;
     }
     std::cout << "}" << std::endl;

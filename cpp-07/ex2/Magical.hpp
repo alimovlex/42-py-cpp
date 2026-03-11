@@ -1,6 +1,4 @@
-#ifndef MAGICAL_HPP
-#define MAGICAL_HPP
-
+#pragma once
 #include <map>
 #include <string>
 #include <variant>
@@ -14,4 +12,3 @@ public:
     virtual std::map<std::string, std::variant<std::string, int>> get_magic_stats() const = 0;
 };
 
-#endif
