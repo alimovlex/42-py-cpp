@@ -23,4 +23,7 @@ add_executable(ex3  ex3/main.cpp
                     ex1/SpellCard.cpp
                     ex0/Card.cpp
                     ex0/CreatureCard.cpp)
-add_executable(ex4 ex4/main.cpp)
+add_executable(ex4  ex4/main.cpp
+                    ex4/TournamentPlatform.cpp
+                    ex4/TournamentCard.cpp
+                    ex0/Card.cpp)

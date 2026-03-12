@@ -15,6 +15,7 @@ bool Deck::remove_card(const std::string &card_name)
     auto it = std::find_if(cards.begin(), cards.end(), [&](const std::unique_ptr<Card>& c) {
         return c->getName() == card_name;
     });
+
     if (it != cards.end())
     {
         cards.erase(it);

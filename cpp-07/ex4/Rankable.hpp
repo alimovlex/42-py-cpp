@@ -1,6 +1,4 @@
-#ifndef RANKABLE_HPP
-#define RANKABLE_HPP
-
+#pragma once
 #include <map>
 #include <string>
 #include <variant>
@@ -14,4 +12,3 @@ public:
     virtual std::map<std::string, std::variant<std::string, int>> get_rank_info() const = 0;
 };
 
-#endif
