@@ -1,25 +1,8 @@
 #include <iostream>
 #include <string>
+#include "Plant.hpp"
 
-class Plant
-{
-  public:
-  std::string name;
-  int height;
-  int days;
-  Plant(std::string name, int height, int days):
-  name(name), height(height), days(days)
-  {
-      // this->name = name;
-      // this->height = height;
-      // this->days = days;
-  }
-  void grow(int cm) { height += cm; }
-  void age(int duration) { days+=duration; }
-  void get_info(){ std::cout << name << ": " << height << "cm, " << days << " days old"; }
-};
-
-int main()
+int main(int argc, char** argv)
 {
     Plant rose("Rose", 25, 30);
     std::cout << "=== Day 1 ===" << std::endl;

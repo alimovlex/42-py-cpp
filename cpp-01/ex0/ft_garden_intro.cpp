@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "=== Welcome to My Garden ===" << std::endl;
     std::string name = "Rose", height = "25cm", age = "30 days";

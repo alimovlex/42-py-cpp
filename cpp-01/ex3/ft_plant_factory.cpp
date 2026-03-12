@@ -1,30 +1,10 @@
 #include <iostream>
 #include <string>
-
-class Plant
-{
-    public:
-    std::string name;
-    int height;
-    int age;
-    Plant(std::string name, int height, int age):
-    name(name), height(height), age(age)
-    {
-        // this->name = name;
-        // this->height = height;
-        // this->age = age;
-        instance_count++;
-        std::cout << "Created: " << name << " (" << height << "cm, " << age <<  " days)";
-        std::cout << std::endl;
-    }
-    static std::size_t get_objects_count() { return instance_count; }
-    private:
-    static std::size_t instance_count;
-};
+#include "Plant.hpp"
 
 std::size_t Plant::instance_count = 0;
 
-int main()
+int main(int argc, char** argv)
 {
     std::cout << "=== Plant Factory Output ===" << std::endl;
     Plant rose("Rose", 25, 30);
