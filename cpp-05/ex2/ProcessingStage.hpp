@@ -5,6 +5,7 @@
 #include <any>
 #include <iostream>
 #include <map>
+#include <memory>
 
 class ProcessingStage
 {
