@@ -11,5 +11,8 @@ add_executable(ex2  ex2/ft_custom_errors.cpp
                     ex2/test_exceptions.cpp)
 add_executable(ex3  ex3/ft_finally_block.cpp
                     ex3/test_watering_system.cpp)
-add_executable(ex4  ex4/ft_raise_errors.cpp)
-add_executable(ex5  ex5/ft_garden_management.cpp)
+add_executable(ex4  ex4/ft_raise_errors.cpp
+                    ex4/test_plant_checks.cpp)
+add_executable(ex5  ex5/ft_garden_management.cpp
+                    ex5/Plant.cpp
+                    ex5/GardenManager.cpp)
