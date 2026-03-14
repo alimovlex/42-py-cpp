@@ -83,7 +83,7 @@ void GardenManager::check_plants()
         }
         catch (const PlantError& e)
         {
-            std::cout << "Error checking " << plant.name << ": " << e.what() << std::endl;
+            std::cout << "Error checking " << plant.name << ": " << e.what() << ") " << std::endl;
         }
     }
 }

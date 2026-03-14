@@ -11,5 +11,5 @@ void Plant::add_water(int amount)
 
 void Plant::info()
 {
-    std::cout << name << ": healthy (water: " << water << " " << sun << std::endl;
+    std::cout << name << ": healthy (water: " << water << " " << sun << ")" << std::endl;
 }
