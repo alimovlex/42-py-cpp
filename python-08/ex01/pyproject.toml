@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ex1"
+version = "0.1.0"
+description = "Python module9 ex1"
+authors = [
+    { name = "rulouis", email = "alimovlex@seznam.cz" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.2.0",
+    "requests>=2.32.0",
+    "numpy>=2.0.0",
+    "matplotlib>=3.7.0",
+]
