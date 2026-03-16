@@ -17,10 +17,3 @@ add_executable(ex5  ex5/ft_plant_types.c
                     ex5/Tree.c
                     ex5/Vegetable.c ex5/Plant.c)
 target_link_libraries(ex5 m)
-add_executable(ex6  ex6/ft_garden_analytics.c
-                    ex6/Plant.c
-                    ex6/FloweringPlant.c
-                    ex6/PrizeFlower.c
-                    ex6/Garden.c
-                    ex6/GardenManager.c
-                    ex6/GardenStats.c)
