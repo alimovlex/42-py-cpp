@@ -4,14 +4,16 @@
 int main(int argc, char** argv)
 {
     printf("=== Garden Plant Registry ===\n");
-    Plant rose, sunflower, cactus;
+    Plant rose = {.init = Plant_ctor, .deinit = Plant_dtor};
+    Plant sunflower = {.init = Plant_ctor, .deinit = Plant_dtor};
+    Plant cactus = {.init = Plant_ctor, .deinit = Plant_dtor};
 
-    Plant_ctor(&rose ,"Rose", 25, 30);
-    Plant_ctor(&sunflower,"Sunflower", 80, 45);
-    Plant_ctor(&cactus,"Cactus", 15, 120);
+    rose.init(&rose ,"Rose", 25, 30);
+    sunflower.init(&sunflower,"Sunflower", 80, 45);
+    cactus.init(&cactus,"Cactus", 15, 120);
 
-    Plant_dtor(&rose);
-    Plant_dtor(&sunflower);
-    Plant_dtor(&cactus);
+    rose.deinit(&rose);
+    sunflower.deinit(&sunflower);
+    cactus.deinit(&cactus);
     return 0;
 }

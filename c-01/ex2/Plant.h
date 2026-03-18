@@ -6,11 +6,21 @@
 #include <string.h>
 #include <stdlib.h>
 
-typedef struct
+typedef struct Plant Plant;
+
+struct Plant
 {
     char* name;
     int height, days;
-}Plant;
+
+    void (*init)(Plant *this, char *name, int height, int age);
+
+    void(*grow)(Plant *this, int cm);
+    void(*age)(Plant *this, int duration);
+    void(*get_info)(Plant *this);
+
+    void (*deinit)(Plant *this);
+};
 
 void Plant_ctor(Plant *this, char *name, int height, int age);
 void Plant_dtor(Plant *this);

@@ -3,20 +3,24 @@
 int main(int argc, char** argv)
 {
     printf("=== Plant Factory Output ===\n");
-    Plant rose, oak, cactus, sunflower, fern;
-    Plant_ctor(&rose,"Rose", 25, 30);
-    Plant_ctor(&oak ,"Oak", 200, 365);
-    Plant_ctor(&cactus ,"Cactus", 5, 90);
-    Plant_ctor(&sunflower ,"Sunflower", 80, 45);
-    Plant_ctor(&fern ,"Fern", 15, 120);
+    Plant rose = {.init = Plant_ctor, .deinit = Plant_dtor, .get_objects_count = Plant_get_objects_count };
+    Plant oak = {.init = Plant_ctor, .deinit = Plant_dtor, .get_objects_count = Plant_get_objects_count };
+    Plant cactus = {.init = Plant_ctor, .deinit = Plant_dtor, .get_objects_count = Plant_get_objects_count };
+    Plant sunflower = {.init = Plant_ctor, .deinit = Plant_dtor, .get_objects_count = Plant_get_objects_count };
+    Plant fern = {.init = Plant_ctor, .deinit = Plant_dtor, .get_objects_count = Plant_get_objects_count };
+    rose.init(&rose,"Rose", 25, 30);
+    oak.init(&oak ,"Oak", 200, 365);
+    cactus.init(&cactus ,"Cactus", 5, 90);
+    sunflower.init(&sunflower ,"Sunflower", 80, 45);
+    fern.init(&fern ,"Fern", 15, 120);
 
     size_t total_plant = Plant_get_objects_count();
     printf("Total plants created: %zu\n", total_plant);
 
-    Plant_dtor(&rose);
-    Plant_dtor(&oak);
-    Plant_dtor(&cactus);
-    Plant_dtor(&sunflower);
-    Plant_dtor(&fern);
+    rose.deinit(&rose);
+    oak.deinit(&oak);
+    cactus.deinit(&cactus);
+    sunflower.deinit(&sunflower);
+    fern.deinit(&fern);
     return 0;
 }

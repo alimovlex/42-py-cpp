@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(garden)
 
-set(CMAKE_C_STANDARD 17)
+
 
 add_executable(ex0  ex0/ft_garden_intro.c)
 add_executable(ex1  ex1/ft_garden_data.c

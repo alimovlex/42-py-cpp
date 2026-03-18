@@ -7,11 +7,17 @@
 #include <stdlib.h>
 #include <stddef.h>
 
-typedef struct
+typedef struct Plant Plant;
+
+struct Plant
 {
     char* name;
     int height, age;
-}Plant;
+
+    void (*init)(Plant *this, char *name, int height, int age);
+    void (*deinit)(Plant *this);
+    size_t (*get_objects_count)();
+};
 static int instance_count;
 void Plant_ctor(Plant *this, char *name, int height, int age);
 void Plant_dtor(Plant* this);
