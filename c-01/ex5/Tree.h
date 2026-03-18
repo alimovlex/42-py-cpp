@@ -4,12 +4,18 @@
 #pragma once
 #include "Plant.h"
 
-typedef struct
+typedef struct Tree Tree;
+
+struct Tree
 {
     Plant super;
     char* name;
     int trunk_diameter, height, days;
-}Tree;
+
+    void (*init)(Tree* this ,char* name, int height, int days, int trunk_diameter);
+    void (*deinit)(Tree* this);
+    void (*produce_shade)(Tree* this);
+};
 
 void Tree_produce_shade(Tree* this);
 void Tree_ctor(Tree* this ,char* name, int height, int days, int trunk_diameter);

@@ -8,11 +8,16 @@
 #include <stddef.h>
 #include <math.h>
 
-typedef struct
+typedef struct Plant Plant;
+
+struct Plant
 {
     char* name;
     int height, days;
-}Plant;
+
+    void (*init)(Plant *this, char *name, int height, int days);
+    void (*deinit)(Plant *this);
+};
 
 void Plant_ctor(Plant* this, char* name, int height, int days);
 void Plant_dtor(Plant* this);
