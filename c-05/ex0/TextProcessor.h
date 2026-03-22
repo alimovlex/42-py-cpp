@@ -10,14 +10,14 @@ typedef struct TextProcessor TextProcessor;
 struct TextProcessor
 {
     DataProcessor super;
-    char (*process)(TextProcessor* this, void* data);
-    bool (*validate)(TextProcessor* this, void* data);
-    char (*format_output)(TextProcessor* this, char* result);
+    char* (*process)(DataProcessor* this, void* data);
+    bool (*validate)(DataProcessor* this, void* data);
+    char* (*format_output)(DataProcessor* this, char* result);
 };
 
-char* TextProcessor_process(TextProcessor* this, void* data);
-bool TextProcessor_validate(TextProcessor* this, void* data);
-char* TextProcessor_format_output(TextProcessor* this, char* result);
+char* TextProcessor_process(DataProcessor* this, void* data);
+bool TextProcessor_validate(DataProcessor* this, void* data);
+char* TextProcessor_format_output(DataProcessor* this, char* result);
 
 
 /*

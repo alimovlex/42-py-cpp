@@ -4,9 +4,41 @@
 
 #include "TextProcessor.h"
 
+DataProcessorVTable TextProcessorVTable = {
+        .process = TextProcessor_process,
+        .validate = TextProcessor_validate,
+        .format_output = TextProcessor_format_output
+};
 
+char* TextProcessor_process(DataProcessor* this, void* data)
+{
+    this->data = data;
+    char *str = strcat("Processing data: ", (char*)data);
+    if (!str)
+        return "Type error: expected char*";
+    else
+        return str;
+}
 
+bool TextProcessor_validate(DataProcessor* this, void* data)
+{
+    this->data = data;
+    char* str = (char*)data;
+    if (!str)
+        return false;
+    else
+        return true;
+}
 
+char* TextProcessor_format_output(DataProcessor* this, char* result)
+{
+    this->result = result;
+    char *str = (char*)this->data;
+    if (!str)
+        return "It has to be a string!";
+    else
+        return str;
+}
 
 /*
 std::string TextProcessor::process(const std::any &data)

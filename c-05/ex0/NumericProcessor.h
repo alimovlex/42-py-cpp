@@ -10,9 +10,9 @@ typedef struct NumericProcessor NumericProcessor;
 struct NumericProcessor
 {
     DataProcessor super;
-    char (*process)(NumericProcessor* this, void* data);
+    char* (*process)(NumericProcessor* this, void* data);
     bool (*validate)(NumericProcessor* this, void* data);
-    char (*format_output)(NumericProcessor* this, char* result);
+    char* (*format_output)(NumericProcessor* this, char* result);
 };
 
 char* NumericProcessor_process(NumericProcessor* this, void* data);
