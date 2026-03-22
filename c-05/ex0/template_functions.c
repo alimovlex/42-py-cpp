@@ -3,6 +3,12 @@
 //
 
 #include "template_functions.h"
+
+void iterate_any(void* data, bool checker, char* str)
+{
+
+}
+
 /*
 size_t get_size(const std::any& data)
 {
