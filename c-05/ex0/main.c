@@ -27,11 +27,13 @@ int test_data_processor(struct DataProcessor* test, char* data)
 int main(int argc, char** argv)
 {
     struct DataProcessor* test = (struct DataProcessor*)malloc(sizeof (struct DataProcessor));
-    int list_data = {1, 2, 3, 4, 5};
-    int new_list_data = {1, 2, 3};
-    char* str_data = "Hello Nexus World",
-            data_log = "INFO: System ready, ERROR", new_str_data = "helloo Nexus",
-            new_data_log = "System ready";
+    int list_data[] = {1, 2, 3, 4, 5};
+    int new_list_data[] = {1, 2, 3};
+    char* str_data = "Hello Nexus World";
+    char* data_log = "INFO: System ready, ERROR";
+    char* new_str_data = "helloo Nexus";
+    char* new_data_log = "System ready";
+    void* test_data[] = {new_list_data, new_str_data, new_data_log};
     //std::vector<std::any> test_data = {new_list_data, new_str_data, new_data_log};
 
     printf("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n");

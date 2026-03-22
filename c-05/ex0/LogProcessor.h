@@ -5,13 +5,18 @@
 #pragma once
 #include "DataProcessor.h"
 
-typedef struct //: public DataProcessor
+typedef struct LogProcessor LogProcessor;
+
+struct LogProcessor
 {
-    /*
-    std::string process(const std::any &data) override;
-    bool validate(const std::any &data) override;
-    std::string format_output(const std::string &result) override;
-    */
-}LogProcessor;
+    DataProcessor super;
+    char (*process)(LogProcessor* this, void* data);
+    bool (*validate)(LogProcessor* this, void* data);
+    char (*format_output)(LogProcessor* this, char* result);
+};
+
+char* LogProcessor_process(LogProcessor* this, void* data);
+bool LogProcessor_validate(LogProcessor* this, void* data);
+char* LogProcessor_format_output(LogProcessor* this, char* result);
 
 
