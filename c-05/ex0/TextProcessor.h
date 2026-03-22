@@ -15,10 +15,9 @@ struct TextProcessor
     char* (*format_output)(DataProcessor* this, char* result);
 };
 
-char* TextProcessor_process(DataProcessor* this, void* data);
-bool TextProcessor_validate(DataProcessor* this, void* data);
-char* TextProcessor_format_output(DataProcessor* this, char* result);
-
+static char* process(DataProcessor* this, void* data);
+static bool validate(DataProcessor* this, void* data);
+static char* format_output(DataProcessor* this, char* result);
 
 /*
 class TextProcessor : public DataProcessor

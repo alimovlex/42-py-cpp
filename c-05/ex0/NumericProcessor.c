@@ -3,6 +3,28 @@
 //
 
 #include "NumericProcessor.h"
+
+static const DataProcessorVTable NumericProcessorVTable = {
+        .process = process,
+        .validate = validate,
+        .format_output = format_output
+};
+
+static char* process(DataProcessor* this, void* data)
+{
+    return "";
+}
+
+static bool validate(DataProcessor* this, void* data)
+{
+    return true;
+}
+
+static char* format_output(DataProcessor* this, char* result)
+{
+    return "";
+}
+
 /*
 std::string NumericProcessor::process(const std::any &data)
 {

@@ -4,13 +4,13 @@
 
 #include "TextProcessor.h"
 
-DataProcessorVTable TextProcessorVTable = {
-        .process = TextProcessor_process,
-        .validate = TextProcessor_validate,
-        .format_output = TextProcessor_format_output
+static const DataProcessorVTable TextProcessorVTable = {
+        .process = process,
+        .validate = validate,
+        .format_output = format_output
 };
 
-char* TextProcessor_process(DataProcessor* this, void* data)
+static char* process(DataProcessor* this, void* data)
 {
     this->data = data;
     char *str = strcat("Processing data: ", (char*)data);
@@ -20,7 +20,7 @@ char* TextProcessor_process(DataProcessor* this, void* data)
         return str;
 }
 
-bool TextProcessor_validate(DataProcessor* this, void* data)
+static bool validate(DataProcessor* this, void* data)
 {
     this->data = data;
     char* str = (char*)data;
@@ -30,7 +30,7 @@ bool TextProcessor_validate(DataProcessor* this, void* data)
         return true;
 }
 
-char* TextProcessor_format_output(DataProcessor* this, char* result)
+static char* format_output(DataProcessor* this, char* result)
 {
     this->result = result;
     char *str = (char*)this->data;

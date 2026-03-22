@@ -10,14 +10,14 @@ typedef struct NumericProcessor NumericProcessor;
 struct NumericProcessor
 {
     DataProcessor super;
-    char* (*process)(NumericProcessor* this, void* data);
-    bool (*validate)(NumericProcessor* this, void* data);
-    char* (*format_output)(NumericProcessor* this, char* result);
+    char* (*process)(DataProcessor* this, void* data);
+    bool (*validate)(DataProcessor* this, void* data);
+    char* (*format_output)(DataProcessor* this, char* result);
 };
 
-char* NumericProcessor_process(NumericProcessor* this, void* data);
-bool NumericProcessor_validate(NumericProcessor* this, void* data);
-char* NumericProcessor_format_output(NumericProcessor* this, char* result);
+static char* process(DataProcessor* this, void* data);
+static bool validate(DataProcessor* this, void* data);
+static char* format_output(DataProcessor* this, char* result);
 
 /*
 class NumericProcessor : public DataProcessor
