@@ -3,6 +3,12 @@
 //
 
 #pragma once
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+void iterate_any(void* data, bool checker, char* str);
+
 /*
 #include <any>
 #include <string>
