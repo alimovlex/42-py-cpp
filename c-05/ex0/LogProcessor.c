@@ -9,17 +9,17 @@ static const DataProcessorVTable NumericProcessorVTable = {
         .validate = validate,
         .format_output = format_output
 };
-
+//TODO: FINISH THIS METHOD!!!
 static char* process(DataProcessor* this, void* data)
 {
     return "";
 }
-
+//TODO: FINISH THIS METHOD!!!
 static bool validate(DataProcessor* this, void* data)
 {
     return true;
 }
-
+//TODO: FINISH THIS METHOD!!!
 static char* format_output(DataProcessor* this, char* result)
 {
     return "";

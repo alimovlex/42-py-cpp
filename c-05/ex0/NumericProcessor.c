@@ -9,45 +9,30 @@ static const DataProcessorVTable NumericProcessorVTable = {
         .validate = validate,
         .format_output = format_output
 };
-
+//TODO: FINISH THIS METHOD!!!
 static char* process(DataProcessor* this, void* data)
 {
     this->data = data;
-    char *str = NULL;
-    char *ptr = NULL;
-    char *output = NULL;
-    int num = 0;
-    int *arr = (int*)data;
     bool checker;
-    while(*arr)
-    {
-        num = (int)*arr;
-        if (!num)
-            return "All elements have to be integers\n";
-        //*ptr = (int)*arr + '0';
-        sprintf(ptr,"%d", num);
-        strcat(str, ptr);
-        arr++;
-    }
-
-
-
+    char* str = NULL;
+    char* output = NULL;
+    iterate_any(data, &checker, output);
     strcat(output, "Processing data: ");
     strcat(output, str);
     return output;
 }
-
+//TODO: FINISH THIS METHOD!!!
 static bool validate(DataProcessor* this, void* data)
 {
     this->data = data;
     bool checker;
-    char* str;
-    //iterate_any<std::vector<int>>(data, str, checker);
+    char* str = NULL;
+    iterate_any(data, &checker, str);
     if (checker)
         printf("Validation: Numeric data verified\n");
     return checker;
 }
-
+//TODO: FINISH THIS METHOD!!!
 static char* format_output(DataProcessor* this, char* result)
 {
     return "";

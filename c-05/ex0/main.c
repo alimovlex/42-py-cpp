@@ -43,12 +43,13 @@ int main(int argc, char** argv)
     //test_data_processor(test, list_data);
 
     printf("Initializing Text Processor...\n");
-    //(struct NumericProcessor *)test;
-    test = (struct NumericProcessor *)malloc(sizeof (struct DataProcessor));
+    //(struct TextProcessor *)test;
+    test = (struct TextProcessor *)malloc(sizeof (struct DataProcessor));
     //test = std::make_unique<TextProcessor>();
     //test_data_processor(test, str_data);
 
     printf("Initializing Log Processor...\n");
+    //(struct LogProcessor *)test;
     test = (struct LogProcessor *)malloc(sizeof (struct DataProcessor));
     /*
     test = std::make_unique<LogProcessor>();

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.25)
 project(processor)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD 17)
 
 add_executable(ex0  ex0/main.c
                     ex0/NumericProcessor.c

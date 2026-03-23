@@ -27,9 +27,12 @@ static bool validate(DataProcessor* this, void* data)
     if (!str)
         return false;
     else
+    {
+        printf("Validation: Text data verified\n");
         return true;
+    }
 }
-
+//TODO: FINISH THIS METHOD!!!
 static char* format_output(DataProcessor* this, char* result)
 {
     this->result = result;

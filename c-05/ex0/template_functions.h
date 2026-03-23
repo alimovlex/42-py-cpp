@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
-void iterate_any(void* data, bool checker, char* str);
+void iterate_any(void* data, bool* checker, char* str);
 
 /*
 #include <any>

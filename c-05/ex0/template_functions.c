@@ -4,9 +4,31 @@
 
 #include "template_functions.h"
 
-void iterate_any(void* data, bool checker, char* str)
+void iterate_any(void* data, bool* checker, char* str)
 {
-
+    char *ptr = NULL;
+    int num = 0;
+    int *arr = (int*)data;
+    if (!arr)
+    {
+        sprintf("All elements have to be integers\n", "%s", str);
+        *checker = false;
+        return;
+    }
+    while(*arr)
+    {
+        num = (int)*arr;
+        if (!num)
+        {
+            *checker = false;
+            return;
+        }
+        //*ptr = (int)*arr + '0';
+        sprintf(ptr,"%d", num);
+        strcat(str, ptr);
+        arr++;
+    }
+    *checker = true;
 }
 
 /*
