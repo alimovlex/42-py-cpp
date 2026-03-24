@@ -10,17 +10,15 @@
 #include "TextProcessor.h"
 #include "LogProcessor.h"
 
-int test_data_processor(struct DataProcessor* test, char* data)
+int test_data_processor(struct DataProcessor* test, void* data)
 {
-    /*
-    bool value = test->validate(data);
-    std::ostringstream oss;
-    oss << std::boolalpha << value;
-    std::string result = oss.str();
-    std::cout << test->process(data) << std::endl;
-    std::cout << result << std::endl;
-    std::cout << test->format_output("hello") << std::endl;
-    */
+    bool value = test->vtable->validate(test, data);
+    printf("%s\n", test->vtable->process(test, data));
+    if (value)
+        printf("True\n");
+    else
+        printf("False\n");
+    printf("%s\n", test->vtable->format_output(test, "hello"));
     return 0;
 }
 
@@ -39,18 +37,21 @@ int main(int argc, char** argv)
     printf("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n");
     printf("Initializing Numeric Processor...\n");
     test = (struct NumericProcessor *)malloc(sizeof (struct DataProcessor));
+    test_data_processor(test, list_data);
     //test = std::make_unique<NumericProcessor>();
     //test_data_processor(test, list_data);
 
     printf("Initializing Text Processor...\n");
     //(struct TextProcessor *)test;
     test = (struct TextProcessor *)malloc(sizeof (struct DataProcessor));
+    test_data_processor(test, str_data);
     //test = std::make_unique<TextProcessor>();
     //test_data_processor(test, str_data);
 
     printf("Initializing Log Processor...\n");
     //(struct LogProcessor *)test;
     test = (struct LogProcessor *)malloc(sizeof (struct DataProcessor));
+    test_data_processor(test, data_log);
     /*
     test = std::make_unique<LogProcessor>();
     test_data_processor(test, data_log);

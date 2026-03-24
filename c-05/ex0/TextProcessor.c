@@ -33,16 +33,52 @@ static bool validate(DataProcessor* this, void* data)
     }
 }
 //TODO: FINISH THIS METHOD!!!
-static char* format_output(DataProcessor* this, char* result)
-{
+static char* format_output(DataProcessor* this, char* result) {
     this->result = result;
-    char *str = (char*)this->data;
-    if (!str)
+    int len = 0, nbr_of_words = 0;
+    char *text_data = (char *) this->data;
+    char *str = "Output: Processed ";
+    if (!text_data)
         return "It has to be a string!";
     else
-        return str;
-}
+    {
+        while(*text_data)
+        {
+            if (*text_data == ' ')
+                nbr_of_words++;
+            len++;
+            text_data++;
+        }
+        int i = nbr_of_words;
+        while(i--)
+            text_data--;
+        if (len > 0)
+            nbr_of_words++;
+        sprintf(str,"%d", len);
+        sprintf(str, "%s", " characters, ");
+        sprintf(str,"%d", nbr_of_words);
+        sprintf(str, "%s", " words");
+        /*
+        size_t length_text = text_data->length();
+        size_t nbr_of_words = 0;
+        std::string str = "Output: Processed ";
 
+        for (char char_ : *text_data)
+        {
+            if (char_ == ' ')
+                nbr_of_words++;
+        }
+        if (length_text > 0)
+            nbr_of_words++;
+
+        str += std::to_string(length_text);
+        str += " characters, ";
+        str += std::to_string(nbr_of_words);
+        str += " words";
+         */
+        return str;
+    }
+}
 /*
 std::string TextProcessor::process(const std::any &data)
 {
