@@ -79,6 +79,11 @@ static char* format_output(DataProcessor* this, char* result) {
         return str;
     }
 }
+
+void TextProcessor_ctor(TextProcessor* this)
+{
+    this->super.vtable = &TextProcessorVTable;
+}
 /*
 std::string TextProcessor::process(const std::any &data)
 {

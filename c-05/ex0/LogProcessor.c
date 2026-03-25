@@ -4,7 +4,7 @@
 
 #include "LogProcessor.h"
 
-static const DataProcessorVTable NumericProcessorVTable = {
+static const DataProcessorVTable LogProcessorVTable = {
         .process = process,
         .validate = validate,
         .format_output = format_output
@@ -23,6 +23,11 @@ static bool validate(DataProcessor* this, void* data)
 static char* format_output(DataProcessor* this, char* result)
 {
     return "";
+}
+
+void LogProcessor_ctor(LogProcessor* this)
+{
+    this->super.vtable = &LogProcessorVTable;
 }
 
 /*

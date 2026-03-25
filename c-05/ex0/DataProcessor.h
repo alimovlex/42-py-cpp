@@ -17,6 +17,7 @@ struct DataProcessor
     struct DataProcessorVTable const *vtable;
     void* data;
     char* result;
+    void (*init)(DataProcessor* this, void* data, char* result);
 };
 
 struct DataProcessorVTable
@@ -40,6 +41,7 @@ static inline char* DataProcessor_format_output(DataProcessor* this, char* resul
 {
     return this->vtable->format_output(this, result);
 }
+
 
 /*
 class DataProcessor

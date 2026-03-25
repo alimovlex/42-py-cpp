@@ -24,7 +24,7 @@ int test_data_processor(struct DataProcessor* test, void* data)
 
 int main(int argc, char** argv)
 {
-    struct DataProcessor* test = (struct DataProcessor*)malloc(sizeof (struct DataProcessor));
+    struct NumericProcessor *test = malloc(sizeof *test);
     int list_data[] = {1, 2, 3, 4, 5};
     int new_list_data[] = {1, 2, 3};
     char* str_data = "Hello Nexus World";
@@ -36,6 +36,8 @@ int main(int argc, char** argv)
 
     printf("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n");
     printf("Initializing Numeric Processor...\n");
+    //if (test)
+    //    *test = (struct NumericProcessor){ .init = NumericProcessor_ctor };
     test = (struct NumericProcessor *)malloc(sizeof (struct DataProcessor));
     test_data_processor(test, list_data);
     //test = std::make_unique<NumericProcessor>();

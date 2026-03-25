@@ -3,6 +3,7 @@
 //
 
 #include "NumericProcessor.h"
+#include "DataProcessor.h"
 
 static const DataProcessorVTable NumericProcessorVTable = {
         .process = process,
@@ -36,6 +37,11 @@ static bool validate(DataProcessor* this, void* data)
 static char* format_output(DataProcessor* this, char* result)
 {
     return "";
+}
+
+void NumericProcessor_ctor(NumericProcessor* this)
+{
+    this->super.vtable = &NumericProcessorVTable;
 }
 
 /*
