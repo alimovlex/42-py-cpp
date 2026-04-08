@@ -17,19 +17,20 @@ std::vector<std::string> game_events(int n) {
         const std::string& player = players[i % players.size()];
         int level = (i * 3) % 20 + 1;
 
-        std::ostringstream oss;
-        oss << "Event " << i << ": Player " << player
-            << " (level " << level << ") ";
+        //std::ostringstream oss;
+        std::string oss;
+        oss = "Event " + std::to_string(i) + ": Player " + player
+            + " (level " + std::to_string(level) + ") ";
 
         if (i % 10 == 0) {
-            oss << "found treasure";
+            oss += "found treasure";
         } else if (i % 7 == 0) {
-            oss << "leveled up";
+            oss += "leveled up";
         } else {
-            oss << "killed monster";
+            oss += "killed monster";
         }
 
-        events.push_back(oss.str());
+        events.push_back(oss);
     }
 
     return events;
